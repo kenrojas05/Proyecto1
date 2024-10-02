@@ -6,12 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Administrador extends Usuarios {
-
+    
+    private String pinAdmin;
+    private String idUsuarioAdmin;
     
     private LocalDateTime fechaIngresoTrabajador;
+    private static List<Administrador> listaUsuarios = new ArrayList();
+   
     
-    Administrador(){
-    
+    Administrador(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin){
+        super(pNombre,pApellidos,pTelefono,pCorreo,pDireccionFisica,pIdUsuario,pin);
+        sacarIngreso();
+        setIdAdmin(pIdUsuario);
+        setIdUsuarioAdmin(pin);
     }
     
     
@@ -21,6 +28,13 @@ public class Administrador extends Usuarios {
     }
     
     // setters
+    
+    public void setIdAdmin(String pIdUsuarioAdmin){
+        this.idUsuarioAdmin = pIdUsuarioAdmin;
+    }
+    public void setIdUsuarioAdmin(String pinAdmin){
+        this.pinAdmin = pinAdmin;
+    }
     
 
 }
