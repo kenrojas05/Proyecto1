@@ -70,7 +70,7 @@ public class Usuarios {
     
     public void setApellidos(String pApellidos){ 
         if (pApellidos == null || pApellidos.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("Los appelidos estan vacios o es invalido");//se utiliza para mandar una excepcion al sistema 
+            throw new IllegalArgumentException("Los apellidos estan vacios o es invalido");//se utiliza para mandar una excepcion al sistema 
         }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
         if (pApellidos.length()<1 || pApellidos.length()>40){
             throw new IllegalArgumentException("Los apellidos tienen una cantidad erronea de caracteres (40>apellidos>1)");
@@ -79,7 +79,10 @@ public class Usuarios {
 
     }
     public void setTelefono(int pTelefono){                                                                           //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
-        String cantidad = String.valueOf(pTelefono);
+         String cantidad = String.valueOf(pTelefono);
+        if (cantidad == null || cantidad.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
+            throw new IllegalArgumentException("Telefono vacio");//se utiliza para mandar una excepcion al sistema 
+        } 
         if (cantidad.length() != 8){
             throw new IllegalArgumentException("Telefono sin 8 digitos");
         }
@@ -112,10 +115,10 @@ public class Usuarios {
     
     public void setIdUsuario(String pIdUsuario){
         if (pIdUsuario == null || pIdUsuario.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("El nombre esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
+            throw new IllegalArgumentException("El ID esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
         }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
         if (pIdUsuario.length()<2 || pIdUsuario.length()>25){
-            throw new IllegalArgumentException("El nombre tiene una cantidad erronea de caracteres (20>nombre>2)");
+            throw new IllegalArgumentException("El ID tiene una cantidad erronea de caracteres (20>nombre>2)");
         }
         else{idUsuario = pIdUsuario;}
     }
