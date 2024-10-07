@@ -20,7 +20,7 @@ public class Usuarios {
     private String idUsuario; //2 a 25 caracteres
     private String pin; // 4 caracteres exactos
     
-    private static List<Usuarios> listaUsuarios = new ArrayList();
+    private static List<Usuarios> listaUsuarios = new ArrayList(); //para guardar a cada cuenta/usuario
     
     Usuarios(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin){
         setNombre(pNombre);

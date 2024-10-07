@@ -241,9 +241,6 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         //desaparecer boton
         esconderBoton("Crear Usuario");
         
-
-
-
         //creacion de campos para escribir jtextfield y labels
         javax.swing.JTextField nombreField = new javax.swing.JTextField(); 
         javax.swing.JTextField apellidosField = new javax.swing.JTextField(); 
