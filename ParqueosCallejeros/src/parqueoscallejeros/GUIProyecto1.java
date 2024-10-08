@@ -185,6 +185,17 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     
     
     private void regresar(JButton boton, java.awt.event.ActionEvent evento) { //regresa al menu anterior (sin finalizar)
+        Component[] listaComponentes = fondoPanel.getComponents(); //consigue los componentes del JPanel fondoPabel
+        for (Component i : listaComponentes) {
+            if (i instanceof JButton){
+                if (((JButton) i).getText() == "Regresar"){ //usando casting par sacar getText()
+                    i.setVisible(false);
+                    i.setEnabled(false);
+                }
+                
+            }
+        }
+        
     javax.swing.JButton regresarButton = new javax.swing.JButton(); 
     
     regresarButton.setText("Regresar");  // Sin texto inicial
@@ -195,9 +206,8 @@ public class GUIProyecto1 extends javax.swing.JFrame {
        public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (boton.getText().equals("Crear Usuario")) {
                 deshabilitarComponentes();
-                usuarioButtonActionPerformed(evento);
-                
-            }   
+                usuarioButtonActionPerformed(evento); 
+            }
        }
     });
     fondoPanel.add(regresarButton); //lo añade y recarga el panel
@@ -250,6 +260,10 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         javax.swing.JTextField idField = new javax.swing.JTextField(); 
         javax.swing.JTextField pinField = new javax.swing.JTextField(); 
         
+        javax.swing.JTextField tajetaField = new javax.swing.JTextField();
+        javax.swing.JTextField vencimientoField = new javax.swing.JTextField();
+        javax.swing.JTextField validacionField = new javax.swing.JTextField();
+        
         
         javax.swing.JLabel nombreLabel = new javax.swing.JLabel();
         nombreLabel.setText("Nombre");
@@ -265,17 +279,30 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         idLabel.setText("ID");
         javax.swing.JLabel pinLabel = new javax.swing.JLabel();
         pinLabel.setText("PIN");
+        javax.swing.JLabel tajetaLabel = new javax.swing.JLabel();
+        tajetaLabel.setText("Tarjeta");
+        javax.swing.JLabel vencimientoLabel = new javax.swing.JLabel();
+        vencimientoLabel.setText("Vencimiento Tarjeta");
+        javax.swing.JLabel validacionLabel = new javax.swing.JLabel();
+        validacionLabel.setText("Codigo Validacion Tarjeta");
 
         //listas que guardan los field y labels
         List<JTextField> listadoField = new ArrayList();
-        List<JLabel> listadoLabel = new ArrayList();
+        List<JLabel> listadoLabelUser = new ArrayList();
+        
+        List<JLabel> listadoLabelTarjeta = new ArrayList();
+        List<JTextField> listadoFieldTarjeta = new ArrayList();
+        
         
         //guardar los elementos para su creacion
         Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField);
-        Collections.addAll(listadoLabel, nombreLabel, apellidosLabel, telefonoLabel, correoLabel, direccionLabel, idLabel, pinLabel);
+        Collections.addAll(listadoLabelUser, nombreLabel, apellidosLabel, telefonoLabel, correoLabel, direccionLabel, idLabel, pinLabel);
+        
+        Collections.addAll(listadoLabelTarjeta, tajetaLabel, vencimientoLabel, validacionLabel);
+        Collections.addAll(listadoFieldTarjeta, tajetaField, vencimientoField, validacionField);
         
         
-        int y = 100; //para la separacion entre componentes
+        int y = 100; //para la separacion entre componentes Y
         for (JTextField i : listadoField){
 
             i.setText("");  // Sin texto inicial
@@ -289,13 +316,44 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             fondoPanel.repaint();
         }
         y=100;
-        for (JLabel i : listadoLabel){
+        for (JLabel i : listadoLabelUser){
 
             i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
 
             i.setForeground(java.awt.Color.WHITE);  // Color
 
             i.setBounds(200, y, 250, 30);  // (x,y,horizontal,vertical)
+            
+            
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JLabel i : listadoLabelTarjeta){
+            i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+
+            i.setForeground(java.awt.Color.WHITE);  // Color
+
+            i.setBounds(600, y, 200, 30);  // (x,y,horizontal,vertical)
+            
+            
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JTextField i : listadoFieldTarjeta){
+
+            i.setText("");  // Sin texto inicial
+            i.setEditable(true);  // Para que sea editable o se pueda escribir
+            i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
+
+            i.setBounds(800, y, 200, 30);  // (x,y,horizontal,vertical)
             
             
             y += 50;
@@ -315,21 +373,18 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     indicadorLabel.setText("");
     indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
     indicadorLabel.setForeground(java.awt.Color.WHITE); 
-    indicadorLabel.setBounds(620, 100, 450, 150);  // (x,y,horizontal,vertical)
+    indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
     
     
     fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
     fondoPanel.revalidate();
     fondoPanel.repaint();
-    
+
     ingresarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            
             listadoField.clear(); //limpia la lista
             Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField); //la vuelve a ingresar para actualizar las lista
-            ingresarButtonActionPerformed(evt , listadoField, indicadorLabel); //reciibe aparte del evento y la lista el label para indicar errores o si hay exito
-            
-            regresar(ingresarUsuario,evt); // regresar al anterior
+            ingresarButtonActionPerformed(evt ,  listadoField,listadoFieldTarjeta, indicadorLabel); //reciibe aparte del evento y la lista el label para indicar errores o si hay exito
             
             }
         });
@@ -339,31 +394,46 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     fondoPanel.repaint();
     }
     
-    private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, JLabel pIndicadorLabel) {                                           
-        // TODO add your handling code here:
+    private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, List<JTextField> pListadoFieldTarjeta, JLabel pIndicadorLabel ) {                                           
+        //variables:
         
-        try {
-            Usuarios nuevoUsuario = new Usuarios(pListadoField.get(0).getText(),pListadoField.get(1).getText(),Integer.parseInt(pListadoField.get(2).getText()),pListadoField.get(3).getText(),pListadoField.get(4).getText(),pListadoField.get(5).getText(),pListadoField.get(6).getText());
-            System.out.println(nuevoUsuario.toString());
-            System.out.println(nuevoUsuario.toStringUsuarios());
-        }
-        catch(NumberFormatException e){ //si el error es por el formato (telefono ya que solo recibe int)
-                pIndicadorLabel.setText("Formato de telefono incorrecto!");
-                pIndicadorLabel.setForeground(java.awt.Color.RED);
-                return;
-        }
-        
-        catch(Exception e){ //cualquier otro error
-                pIndicadorLabel.setText(e.getMessage()); //solo el mensaje del error
-                pIndicadorLabel.setForeground(java.awt.Color.RED);
-                
-                return;
-        }
 
         
+        
+            try {
+                String nombre = pListadoField.get(0).getText();
+                String apellidos = pListadoField.get(1).getText();
+                String correo= pListadoField.get(3).getText();
+                String direccionFisica = pListadoField.get(4).getText();
+                String idUsuario = pListadoField.get(5).getText();
+                String pin = pListadoField.get(6).getText();
+                String tarjetaVencimiento = pListadoFieldTarjeta.get(1).getText();
+                int telefono = Integer.parseInt(pListadoField.get(2).getText());
+                long tarjeta = Long.parseLong(pListadoFieldTarjeta.get(0).getText());
+                int codigoVal = Integer.parseInt(pListadoFieldTarjeta.get(2).getText());
+                
+                usuariosParqueo nuevoUsuario = new usuariosParqueo(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin,tarjeta,tarjetaVencimiento,codigoVal);
+                System.out.println(nuevoUsuario.toString());
+                System.out.println(nuevoUsuario.toStringUsuarios());
+                
+                
+            }
+            catch(NumberFormatException e){ //si el error es por el formato (telefono ya que solo recibe int)
+                    pIndicadorLabel.setText("Campos vacios ''!");
+                    pIndicadorLabel.setForeground(java.awt.Color.RED);
+                    return;
+            }
+
+            catch(Exception e){ //cualquier otro error
+                    pIndicadorLabel.setText(e.getMessage()); //solo el mensaje del error
+                    pIndicadorLabel.setForeground(java.awt.Color.RED);
+
+                    return;
+            }
+        
+        
         for (JTextField i : pListadoField ){ //vaciar todo
-            i.setText(""); 
-            
+            i.setText("");     
         }
         pIndicadorLabel.setText("Usuario ingresado con exito!");
         pIndicadorLabel.setForeground(java.awt.Color.GREEN);

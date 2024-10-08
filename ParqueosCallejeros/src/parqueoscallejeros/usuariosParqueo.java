@@ -10,28 +10,51 @@ import java.util.Properties;
 import javax.mail.internet.*; // Importa las clases necesarias para MIME
 
 public class usuariosParqueo extends Usuarios{
-    private int tarjeta; // Natural, 16 dígitos (tiene que ser única dentro de la aplicación)
+    private long tarjeta; // Natural, 16 dígitos (tiene que ser única dentro de la aplicación)
     private String tarjetaVencimiento; // Mes y año, ej: 02/24 o 02/2024
     private int codigoVal; // Natural, 3 dígitos exactos
 
     private static List<usuariosParqueo> usuarios = new ArrayList<>(); // Para guardar a estos usuarios 
+    private List<String> placaCarros = new ArrayList<>(); //1 a 6 caracteres
     
     private LocalDateTime fechaIngreso;
     
-    usuariosParqueo(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin, int pTarjeta, String pTarjetaVencimiento, int pCodigoVal){
+    usuariosParqueo(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin, long pTarjeta, String pTarjetaVencimiento, int pCodigoVal){
         super(pNombre, pApellidos, pTelefono, pCorreo, pDireccionFisica, pIdUsuario, pin);
         setTarjeta(pTarjeta);
         setTarjetaVencimiento(pTarjetaVencimiento);
         setCodigoVal(pCodigoVal);
+        sacarIngresoSistema();
+        
+        agregarUserParqueo(this);
         
     }
     
+    public void agregarUserParqueo(usuariosParqueo user){
+        for (usuariosParqueo i : usuarios){
+            if (i.getTarjeta() == user.getTarjeta()){
+                throw new IllegalArgumentException("Tarjeta debe ser unica!");
+            }
+        }
+
+        usuarios.add(user);
+    } 
     
+        public String toStringUserParqueo(){
+        return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin() + " " + getTarjeta() + " " + getTarjetaVencimiento() + " " + getCodigoVal();
+    }
     
-    
-    
-    
-    
+    public String toStringUsuariosParqueo(){
+        String res = "";
+        for (Usuarios i : getUsuarios()){
+            if(i instanceof usuariosParqueo){
+                usuariosParqueo parqueo = (usuariosParqueo) i;
+                res += parqueo.toStringUserParqueo() + "\n";
+            }
+            }
+        return res;
+    }
+
     public void sacarIngresoSistema() {
         LocalDateTime fechaActual = LocalDateTime.now(); // Obtiene la fecha y hora actual
         fechaIngreso = fechaActual; // Asigna la fecha de ingreso
@@ -82,28 +105,68 @@ public class usuariosParqueo extends Usuarios{
                        +"Telefono:  "+usuario.getTelefono()+"\n"
                        +"Correo:    "+usuario.getCorreo()+"\n"
                        +"Direccion: "+usuario.getDireccionFisica()+"\n"
+                       +"ID: "+usuario.getIdUsuario()+"\n"
+                       +"PIN: "+usuario.getPin()+"\n"
                        +"Tarjeta:   "+usuario.getTarjeta()+"\n"
                        +"Vencimiento de Tarjeta: "+usuario.getTarjetaVencimiento()+"\n"
-                       +"Codigo de Tarjeta: "+usuario.getCodigoVal()+" "+"\n"
-                       +"ETC DE MOMENTO"; //FALTA AGREGAR OTROS DATOS 
+                       +"Codigo de Tarjeta: "+usuario.getCodigoVal()+" "+"\n";
             }
         }
-        return datos;
+        if (placaCarros.isEmpty()) {
+            return datos +"Carros: 0"+"\n"; //FALTA AGREGAR OTROS DATOS 
+
+        }
+        int contador = 0;
+        String carros = "";
+        for (String i: placaCarros){
+            contador+=1;
+            carros += "Carro: "+contador+" Placa: "+i+"\n";
+            ;
+        }
+        return datos + carros;
     }
 
     //setters y getters
     
-    public void setTarjeta(int pTarjeta){ //FALTA ANADIR LOGICA
-        tarjeta = pTarjeta;
-    }
-    public void setTarjetaVencimiento(String pTarjetaVencimiento){
-        tarjetaVencimiento = pTarjetaVencimiento;
-    }
-    public void setCodigoVal(int pCodigoVal){
-        codigoVal = pCodigoVal;
+    public void setTarjeta(long pTarjeta){ 
+        String cantidad = String.valueOf(pTarjeta);
+        if (cantidad == null || cantidad.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
+            throw new IllegalArgumentException("tarjeta invalida!");//se utiliza para mandar una excepcion al sistema 
+        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+        if (cantidad.length()>16){
+            throw new IllegalArgumentException("tarjeta con tamano invalido!");
+        }
+        else{tarjeta = pTarjeta;}
     }
     
-    public int getTarjeta(){
+    public void setTarjetaVencimiento(String pTarjetaVencimiento){
+         String regex = "(\\d{1,2})/(\\d+)"; //formato de tarjeta 0..12/0..+
+
+        if (!pTarjetaVencimiento.matches(regex)) {
+            throw new IllegalArgumentException("Tarjeta V Formato inválido. '0-12/0-...'");
+        }
+        else{tarjetaVencimiento = pTarjetaVencimiento;}
+        
+    }
+    public void setCodigoVal(int pCodigoVal){
+        String cantidad = String.valueOf(pCodigoVal);
+        if (cantidad.length()!=3 || cantidad == null){
+            throw new IllegalArgumentException("El Codigo de validacion tiene una cantidad erronea de caracteres o es invalido");
+        }
+        else{codigoVal = pCodigoVal;}
+    }
+    
+    public void setCarro( String placa){ 
+        if (placa == null || placa.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
+            throw new IllegalArgumentException("placa invalida!");//se utiliza para mandar una excepcion al sistema 
+        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+        if (placa.length()>6 || placa.length()<1){
+            throw new IllegalArgumentException("placa con tamano invalido!");
+        }
+        else{placaCarros.add(placa);}
+    }
+    
+    public long getTarjeta(){
         return tarjeta;
     }
     public String getTarjetaVencimiento(){
@@ -111,8 +174,5 @@ public class usuariosParqueo extends Usuarios{
     }
     public int getCodigoVal(){
         return codigoVal;
-    }
-    
-    
-    
+    }  
 }
