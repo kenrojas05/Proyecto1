@@ -175,4 +175,12 @@ public class usuariosParqueo extends Usuarios{
     public int getCodigoVal(){
         return codigoVal;
     }  
+
+    public List<usuariosParqueo> getUsuariosParqueo(){
+        return usuarios;
+    }  
+    
+    public List<String> getCarros(){
+        return placaCarros;
+    }  
 }

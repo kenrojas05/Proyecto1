@@ -181,6 +181,20 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         }
     }
     
+    private JButton buscarBoton(String nombre){ //Busca un boton con el texto que este posee
+        Component[] listaComponentes = fondoPanel.getComponents(); //consigue los componentes del JPanel fondoPabel
+            for (Component i : listaComponentes) {
+                if (i instanceof JButton){
+                    if (((JButton) i).getText().equals(nombre)){ //usando casting par sacar getText()
+                        return (JButton) i;
+                    }
+
+                }
+            }
+        return null;
+    }
+    
+    
    
     
     
@@ -208,6 +222,14 @@ public class GUIProyecto1 extends javax.swing.JFrame {
                 deshabilitarComponentes();
                 usuarioButtonActionPerformed(evento); 
             }
+            if (boton.getText().equals("Iniciar Sesion")) {
+                deshabilitarComponentes();
+                usuarioButtonActionPerformed(evento); 
+            }
+            if (boton.getText().equals("Siguiente ->")) {
+                deshabilitarComponentes();
+                usarUsuarioActionPerformed(evento, boton); 
+            }
        }
     });
     fondoPanel.add(regresarButton); //lo añade y recarga el panel
@@ -228,13 +250,22 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     crearUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
        public void actionPerformed(java.awt.event.ActionEvent evt) {
             crearUsuarioActionPerformed(evt);
-            regresar(crearUsuario,evt);
-            
+            regresar(crearUsuario,evt);    
        }
-    });
+    }                              );
+    usarUsuario.setText("Iniciar Sesion");
+    usarUsuario.setBounds(50, 150, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+    
+    usarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+       public void actionPerformed(java.awt.event.ActionEvent evt) {
+            usarUsuarioActionPerformed(evt, usarUsuario);
+            regresar(usarUsuario,evt);    
+       }
+    }                              );
     
     
-    fondoPanel.add(crearUsuario); //lo añade y recarga el panel
+    fondoPanel.add(crearUsuario); //los añade y recarga el panel
+    fondoPanel.add(usarUsuario); 
     fondoPanel.revalidate();
     fondoPanel.repaint();
     
@@ -246,10 +277,143 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     private void inspectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inspectButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inspectButtonActionPerformed
-    
-     private void crearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        //desaparecer boton
+    private void usarUsuarioActionPerformed(java.awt.event.ActionEvent evt, JButton button){
+        System.out.println("Inicio sesion jeje");
+        
+        regresar(buscarBoton("Iniciar Sesion"), evt);
+        //desaparecer botones
+        esconderBoton("Iniciar Sesion");
         esconderBoton("Crear Usuario");
+        
+        javax.swing.JTextField idField = new javax.swing.JTextField(); 
+        javax.swing.JTextField pinField = new javax.swing.JTextField(); 
+        
+        javax.swing.JLabel idLabel = new javax.swing.JLabel();
+        idLabel.setText("ID");
+        javax.swing.JLabel pinLabel = new javax.swing.JLabel(); 
+        pinLabel.setText("PIN");
+        
+        List<JTextField> listadoSesionF = new ArrayList();
+        List<JLabel> listadoSesionL = new ArrayList();
+        
+        Collections.addAll(listadoSesionF, idField, pinField);
+        Collections.addAll(listadoSesionL, idLabel, pinLabel);
+       
+        
+        int y = 100;
+        for (JTextField i : listadoSesionF){
+
+            i.setText("");  // Sin texto inicial
+            i.setEditable(true);  // Para que sea editable o se pueda escribir
+            i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
+            
+            i.setBounds(350, y, 200, 30); //(x,y,horizontal,vertical)
+            y += 50;
+            fondoPanel.add(i);
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JLabel i : listadoSesionL){
+
+            i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+
+            i.setForeground(java.awt.Color.WHITE);  // Color
+
+            i.setBounds(200, y, 250, 30);  // (x,y,horizontal,vertical)
+            
+            
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        
+        //label para indicar errores o exito
+        javax.swing.JLabel indicadorLabel = new javax.swing.JLabel();
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+        
+        fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+        
+        
+        javax.swing.JButton siguienteButton = new javax.swing.JButton(); //boton para ingresar datoss
+    
+        siguienteButton.setText("Siguiente ->"); 
+        siguienteButton.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
+
+        fondoPanel.add(siguienteButton); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+        
+        siguienteButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            listadoSesionF.clear(); //limpia la lista
+            Collections.addAll(listadoSesionF, idField, pinField); //la vuelve a ingresar para actualizar las lista
+            System.out.println("Siguiente " + idField.getText() +" "+ pinField.getText());
+            siguienteActionPerformed(evt,listadoSesionF,indicadorLabel, siguienteButton);
+            regresar(siguienteButton, evt);
+            }
+        });
+        
+
+
+    }
+    
+    private void siguienteActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, JLabel pIndicadorLabel, JButton siguienteButton){
+        //label para indicar errores o exito
+        javax.swing.JLabel indicadorLabel = new javax.swing.JLabel();
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+        
+        fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+        
+        try{
+            String id = pListadoField.get(0).getText();
+            String pin = pListadoField.get(1).getText();
+            System.out.println("Inicio sesion casi !");
+            
+            Usuarios user = Usuarios.existeUsuario(id, pin);
+            if (user != null) {
+                System.out.println("Inicio sesión exitoso!");
+                regresar(siguienteButton, evt);
+                System.out.println("Inicio!");
+                
+            } 
+            else {
+                throw new IllegalArgumentException("Usuario o PIN incorrectos.");
+            }
+           
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            pIndicadorLabel.setText(e.getMessage());
+            pIndicadorLabel.setForeground(java.awt.Color.RED);
+            return;
+        }
+        
+        for (JTextField i : pListadoField ){ //vaciar todo
+            i.setText("");     
+        }
+        pIndicadorLabel.setText("Inicio Sesion exitoso!");
+        pIndicadorLabel.setForeground(java.awt.Color.GREEN);
+
+    }
+    
+    
+    private void crearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        //desaparecer botones
+        esconderBoton("Crear Usuario");
+        esconderBoton("Iniciar Sesion");
         
         //creacion de campos para escribir jtextfield y labels
         javax.swing.JTextField nombreField = new javax.swing.JTextField(); 
@@ -377,9 +541,11 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     
     
     fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
+    fondoPanel.add(ingresarUsuario); //lo añade y recarga el panel
     fondoPanel.revalidate();
     fondoPanel.repaint();
 
+    
     ingresarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
        public void actionPerformed(java.awt.event.ActionEvent evt) {
             listadoField.clear(); //limpia la lista
@@ -389,17 +555,11 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             }
         });
     
-    fondoPanel.add(ingresarUsuario); //lo añade y recarga el panel
-    fondoPanel.revalidate();
-    fondoPanel.repaint();
+
     }
     
     private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, List<JTextField> pListadoFieldTarjeta, JLabel pIndicadorLabel ) {                                           
         //variables:
-        
-
-        
-        
             try {
                 String nombre = pListadoField.get(0).getText();
                 String apellidos = pListadoField.get(1).getText();
@@ -439,6 +599,12 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         pIndicadorLabel.setForeground(java.awt.Color.GREEN);
                 
     }
+    
+    private void ingresarCarrosButtonActionPerformed(java.awt.event.ActionEvent evt){
+    
+    
+    }
+    
     
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:

@@ -36,13 +36,36 @@ public class Usuarios {
     
     public void agregarUsuario(Usuarios nuevoUsuario){
         for (Usuarios i : listaUsuarios){
-            if (i.getPin() == nuevoUsuario.getPin()){
+            if (i.getPin() == nuevoUsuario.getPin() && i.getIdUsuario() == nuevoUsuario.getPin()){
                 throw new IllegalArgumentException("Usuario ya creado");
             }
         }
 
         listaUsuarios.add(nuevoUsuario);
-    }    
+    }
+    
+    public static Usuarios existeUsuario(String id, String pin){
+        Usuarios usuario = null;
+        for (Usuarios i : listaUsuarios){
+            if (i.getPin().equals(pin) && i.getIdUsuario().equals(id)){
+                System.out.println("Usuario encontrado");
+                usuario = i;
+                if (usuario instanceof usuariosParqueo){
+                    usuariosParqueo userParqueo = (usuariosParqueo) usuario;
+                    return userParqueo;
+                }
+                if (usuario instanceof Administrador){
+                    Administrador admin = (Administrador) usuario;
+                    return admin;
+                }  
+            /*    if (usuario instanceof Inspector){ //Inspector no existe de momento...
+                    Inspector inspec = (Inspector) usuario;
+                    return inspec;
+                } */ 
+            }
+        }
+        return usuario;
+    }
     
     public String toString(){
         return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin();
