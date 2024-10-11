@@ -572,7 +572,7 @@ public class GUIProyecto1 extends javax.swing.JFrame {
                 long tarjeta = Long.parseLong(pListadoFieldTarjeta.get(0).getText());
                 int codigoVal = Integer.parseInt(pListadoFieldTarjeta.get(2).getText());
                 
-                usuariosParqueo nuevoUsuario = new usuariosParqueo(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin,tarjeta,tarjetaVencimiento,codigoVal);
+                UsuariosParqueo nuevoUsuario = new UsuariosParqueo(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin,tarjeta,tarjetaVencimiento,codigoVal);
                 System.out.println(nuevoUsuario.toString());
                 System.out.println(nuevoUsuario.toStringUsuarios());
                 

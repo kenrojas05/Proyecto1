@@ -8,7 +8,7 @@ import java.util.regex.Pattern; // una expresion regular compilada (para ser usa
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuarios {
+public class Usuarios extends Parqueo{
     //variables
     private String nombre; //de 2 a 20 caracteres
     private String apellidos; //de 1 a 40 caracteres
@@ -21,6 +21,8 @@ public class Usuarios {
     private String pin; // 4 caracteres exactos
     
     private static List<Usuarios> listaUsuarios = new ArrayList(); //para guardar a cada cuenta/usuario
+    
+    Usuarios(){}
     
     Usuarios(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin){
         setNombre(pNombre);
@@ -36,7 +38,8 @@ public class Usuarios {
     
     public void agregarUsuario(Usuarios nuevoUsuario){
         for (Usuarios i : listaUsuarios){
-            if (i.getPin() == nuevoUsuario.getPin() && i.getIdUsuario() == nuevoUsuario.getPin()){
+            if (i.getPin().equals(nuevoUsuario.getPin()) && i.getIdUsuario().equals(nuevoUsuario.getIdUsuario())){
+
                 throw new IllegalArgumentException("Usuario ya creado");
             }
         }
@@ -44,14 +47,14 @@ public class Usuarios {
         listaUsuarios.add(nuevoUsuario);
     }
     
-    public static Usuarios existeUsuario(String id, String pin){
+    public static Usuarios existeUsuario(String id, String pin){ //devuelve el usuario casteado a su tipo con su objeto
         Usuarios usuario = null;
         for (Usuarios i : listaUsuarios){
             if (i.getPin().equals(pin) && i.getIdUsuario().equals(id)){
                 System.out.println("Usuario encontrado");
                 usuario = i;
-                if (usuario instanceof usuariosParqueo){
-                    usuariosParqueo userParqueo = (usuariosParqueo) usuario;
+                if (usuario instanceof UsuariosParqueo){
+                    UsuariosParqueo userParqueo = (UsuariosParqueo) usuario;
                     return userParqueo;
                 }
                 if (usuario instanceof Administrador){

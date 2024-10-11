@@ -9,29 +9,107 @@ import javax.mail.*; // Se añadió la librería lib al proyecto para la API jav
 import java.util.Properties; 
 import javax.mail.internet.*; // Importa las clases necesarias para MIME
 
-public class usuariosParqueo extends Usuarios{
+public class UsuariosParqueo extends Usuarios{
     private long tarjeta; // Natural, 16 dígitos (tiene que ser única dentro de la aplicación)
     private String tarjetaVencimiento; // Mes y año, ej: 02/24 o 02/2024
     private int codigoVal; // Natural, 3 dígitos exactos
 
-    private static List<usuariosParqueo> usuarios = new ArrayList<>(); // Para guardar a estos usuarios 
+    private int tiempoGuardado; //minutos
+    private int tiempoComprado; //minutos tambien
+    
+    private static List<UsuariosParqueo> usuarios = new ArrayList<>(); // Para guardar a estos usuarios 
     private List<String> placaCarros = new ArrayList<>(); //1 a 6 caracteres
     
-    private LocalDateTime fechaIngreso;
+    private LocalDateTime fechaIngreso; //LocalDateTime.now();    
+    private LocalDateTime ingresoParqueo = LocalDateTime.of(2023, 7, 9, 11, 33); //DATOS DE PRUEBA
     
-    usuariosParqueo(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin, long pTarjeta, String pTarjetaVencimiento, int pCodigoVal){
+    UsuariosParqueo(){}
+    
+    UsuariosParqueo(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin, long pTarjeta, String pTarjetaVencimiento, int pCodigoVal){
         super(pNombre, pApellidos, pTelefono, pCorreo, pDireccionFisica, pIdUsuario, pin);
         setTarjeta(pTarjeta);
         setTarjetaVencimiento(pTarjetaVencimiento);
         setCodigoVal(pCodigoVal);
-        sacarIngresoSistema();
-        
+        //sacarIngresoSistema();
         agregarUserParqueo(this);
+            
+    }
+    public void Parquear(int espacioParqueo, int tiempoComprar){
+        //Buscar espacio
+        Parqueo parqueo = new Parqueo();
+        List<Integer> listaEspacios = parqueo.getEspaciosParqueo(); //lista con todos los espacios que existen
+        List<Parqueo> listaParqueos = parqueo.getListaParqueos(); //Lista con parqueos realizados y configuracion
+        
+        if (!listaEspacios.contains(espacioParqueo)){
+            throw new IllegalArgumentException("El espacio buscado no existe!");
+        }
+        
+        for (Parqueo i: listaParqueos){
+            if (i.getEspacio() == espacioParqueo){ //tener en cuenta desaparcar
+                throw new IllegalArgumentException("El espacio: "+ espacioParqueo +" esta ocupado");
+            }
+            else{
+                System.out.println("Esta disponible yei!");
+                 System.out.println("AUN FALTA LOGICA");
+            }
+        }
+        //Tiempo de parqueo...
         
     }
     
-    public void agregarUserParqueo(usuariosParqueo user){
-        for (usuariosParqueo i : usuarios){
+    public void revisarCarros() {                   //NO DEBE SER CON HORA ACTUAL DEBE SER CON LA HORA QUE ELLOS COMPRARON
+        Parqueo parqueo = new Parqueo();
+        UsuariosParqueo usuarioParqueo = new UsuariosParqueo();
+        LocalDateTime horaActual = LocalDateTime.now();
+        List<Parqueo> listaParqueos = parqueo.getListaParqueos();
+        List<Integer> listaEspacios = parqueo.getEspaciosParqueo();
+
+        String placa = "";
+
+        // Verificar si ambas listas no son nulas
+        if (listaParqueos != null && listaEspacios != null) {
+            for (Integer espacio : listaEspacios) {
+                System.out.println(espacio);
+
+                for (Parqueo parqueoObj : listaParqueos) {
+                    System.out.println(parqueoObj);
+
+                    if (parqueoObj.getEspacio() == espacio) {
+                        System.out.println(parqueoObj.getEspacio());
+                        placa = parqueoObj.getPlaca();
+
+                        for (UsuariosParqueo usuario : usuarioParqueo.getUsuariosParqueo()) {
+                            System.out.println(usuario.toStringCarros());
+
+                            for (String carro : usuario.getCarros()) {
+                                if (carro.equals(placa)) {
+                                    LocalDateTime ingreso = usuario.getIngresoParqueo();
+
+                                    if (ingreso.isAfter(horaActual)) {
+                                        System.out.println(horaActual+" "+ingreso);
+                                        System.out.println("El tiempo de estacionamiento ya venció.");
+                                    } else if (ingreso.isBefore(horaActual)) {
+                                        System.out.println("Aún no ha vencido.");
+                                        System.out.println(horaActual+" "+ingreso);
+                                    } else {
+                                        System.out.println("El tiempo de estacionamiento coincide con la hora actual.");
+                                        System.out.println(horaActual+" "+ingreso);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public void desaparcar(){
+        LocalDateTime horaInicial = ingresoParqueo;
+    }
+    
+    public void agregarUserParqueo(UsuariosParqueo user){
+        for (UsuariosParqueo i : usuarios){
             if (i.getTarjeta() == user.getTarjeta()){
                 throw new IllegalArgumentException("Tarjeta debe ser unica!");
             }
@@ -40,28 +118,34 @@ public class usuariosParqueo extends Usuarios{
         usuarios.add(user);
     } 
     
-        public String toStringUserParqueo(){
-        return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin() + " " + getTarjeta() + " " + getTarjetaVencimiento() + " " + getCodigoVal();
+    public String toStringUserParqueo(){
+        return "UsuarioParqueo: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin() + " " + getTarjeta() + " " + getTarjetaVencimiento() + " " + getCodigoVal();
     }
     
     public String toStringUsuariosParqueo(){
         String res = "";
         for (Usuarios i : getUsuarios()){
-            if(i instanceof usuariosParqueo){
-                usuariosParqueo parqueo = (usuariosParqueo) i;
+            if(i instanceof UsuariosParqueo){
+                UsuariosParqueo parqueo = (UsuariosParqueo) i;
                 res += parqueo.toStringUserParqueo() + "\n";
             }
             }
         return res;
     }
 
-    public void sacarIngresoSistema() {
+    public void setFechaIngreso() {
         LocalDateTime fechaActual = LocalDateTime.now(); // Obtiene la fecha y hora actual
         fechaIngreso = fechaActual; // Asigna la fecha de ingreso
         System.out.println(fechaIngreso); // Imprime la fecha de ingreso
     }
     
-    public void enviarCorreoDatos(String correo, String nombre, usuariosParqueo usuario) {
+    public void setIngresoParqueo() {
+        LocalDateTime fechaActual = LocalDateTime.now(); // Obtiene la fecha y hora actual
+        ingresoParqueo = fechaActual; // Asigna la fecha de ingreso
+        System.out.println(ingresoParqueo); // Imprime la fecha de ingreso
+    }
+    
+    public void enviarCorreoDatos(String correo, String nombre, UsuariosParqueo usuario) {
         Properties propiedades = new Properties(); //las propiedades del mail (configurado para gmail)
             propiedades.put("mail.smtp.auth", "true"); //valida la autentificacion a traves de smtp 
             propiedades.put("mail.smtp.starttls.enable", "true"); // Transport Layer Security o TLS para la conexión SMTP.
@@ -96,10 +180,10 @@ public class usuariosParqueo extends Usuarios{
             }
         }
     
-    public String datosUsuario(usuariosParqueo usuario){
+    public String datosUsuario(UsuariosParqueo usuario){
         String datos = "";
         for (Usuarios i : getUsuarios()){
-            if (i instanceof usuariosParqueo || i.getPin() == this.getPin() || i.getIdUsuario() == this.getIdUsuario()){
+            if (i instanceof UsuariosParqueo || i.getPin() == this.getPin() || i.getIdUsuario() == this.getIdUsuario()){
                 datos = "Nombre: " + usuario.getNombre() +"\n"
                        +"Apellidos: " +usuario.getApellidos()+ "\n"
                        +"Telefono:  "+usuario.getTelefono()+"\n"
@@ -126,7 +210,7 @@ public class usuariosParqueo extends Usuarios{
         return datos + carros;
     }
 
-    //setters y getters
+    //setters 
     
     public void setTarjeta(long pTarjeta){ 
         String cantidad = String.valueOf(pTarjeta);
@@ -140,10 +224,10 @@ public class usuariosParqueo extends Usuarios{
     }
     
     public void setTarjetaVencimiento(String pTarjetaVencimiento){
-         String regex = "(\\d{1,2})/(\\d+)"; //formato de tarjeta 0..12/0..+
+         String regex = "(0?[1-9]|1[0-2])/(\\d{1,2})";//formato de tarjeta Ej: 02/24 0? significa que puede ir solo #[inicio-fin] rango de numeros que pueden ir a la par de #
 
         if (!pTarjetaVencimiento.matches(regex)) {
-            throw new IllegalArgumentException("Tarjeta V Formato inválido. '0-12/0-...'");
+            throw new IllegalArgumentException("Tarjeta V Formato invalido. '0-12/0-...'");
         }
         else{tarjetaVencimiento = pTarjetaVencimiento;}
         
@@ -166,6 +250,19 @@ public class usuariosParqueo extends Usuarios{
         else{placaCarros.add(placa);}
     }
     
+    //getters
+    
+    public String toStringCarros(){
+        int contador = 0;
+        String carros = "";
+        for (String i: placaCarros){
+            contador+=1;
+            carros += "Carro: "+contador+" Placa: "+i+"\n";
+            ;
+        }
+        return carros;
+    }
+    
     public long getTarjeta(){
         return tarjeta;
     }
@@ -176,11 +273,16 @@ public class usuariosParqueo extends Usuarios{
         return codigoVal;
     }  
 
-    public List<usuariosParqueo> getUsuariosParqueo(){
+    public List<UsuariosParqueo> getUsuariosParqueo(){
         return usuarios;
     }  
     
     public List<String> getCarros(){
         return placaCarros;
     }  
+    
+    public LocalDateTime getIngresoParqueo(){
+        return this.ingresoParqueo;
+    } 
+    
 }
