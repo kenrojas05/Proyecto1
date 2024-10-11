@@ -1,4 +1,4 @@
-package parqueoscallejeros;
+package parqueoscallejeros; //
                                                     //correo jvim woqi nqnz puyb
 
 import java.io.UnsupportedEncodingException;
@@ -21,7 +21,7 @@ public class UsuariosParqueo extends Usuarios{
     private List<String> placaCarros = new ArrayList<>(); //1 a 6 caracteres
     
     private LocalDateTime fechaIngreso; //LocalDateTime.now();    
-    private LocalDateTime ingresoParqueo = LocalDateTime.of(2023, 7, 9, 11, 33); //DATOS DE PRUEBA
+    private LocalDateTime ingresoParqueo; //DATOS DE PRUEBA
     
     UsuariosParqueo(){}
     
@@ -34,8 +34,9 @@ public class UsuariosParqueo extends Usuarios{
         agregarUserParqueo(this);
             
     }
-    public void Parquear(int espacioParqueo, int tiempoComprar){
+    public void Parquear(String placa, int espacioParqueo, int tiempoComprado){
         //Buscar espacio
+        List<Integer> listaTiempo = new ArrayList<>();
         Parqueo parqueo = new Parqueo();
         List<Integer> listaEspacios = parqueo.getEspaciosParqueo(); //lista con todos los espacios que existen
         List<Parqueo> listaParqueos = parqueo.getListaParqueos(); //Lista con parqueos realizados y configuracion
@@ -48,14 +49,78 @@ public class UsuariosParqueo extends Usuarios{
             if (i.getEspacio() == espacioParqueo){ //tener en cuenta desaparcar
                 throw new IllegalArgumentException("El espacio: "+ espacioParqueo +" esta ocupado");
             }
-            else{
-                System.out.println("Esta disponible yei!");
-                 System.out.println("AUN FALTA LOGICA");
-            }
+
         }
         //Tiempo de parqueo...
+        try{
+            listaTiempo = this.tiempoComprar(tiempoComprado);
+        }
+        catch(Exception e){
+            throw new IllegalArgumentException("Error en el tiempo");
+        }
+        this.setTiempoComprado(listaTiempo.get(0));
+        this.setTiempoGuardado(listaTiempo.get(1));
+        Parqueo parqueoUsuario = new Parqueo(placa, espacioParqueo);
+        setCarro(placa);
+        parqueoUsuario.setParqueo(parqueoUsuario);
+        parqueoUsuario.establecerParqueos();
+        this.setIngresoParqueo();
+        parqueoUsuario.setHoraSalida(sacarTiempoRestante(placa));
+        System.out.println("Ingreso: "+this.getIngresoParqueo()+" Salida: "+parqueoUsuario.getHoraSalida());
+
+        System.out.println(sacarTiempoRestante(placa));
+        System.out.println(parqueoUsuario.toStringParqueo());
+        System.out.println("Esta disponible yei!");
+        System.out.println("Tiempo comprado: "+ getTiempoComprado());
+        System.out.println("Tiempo guardado: "+ getTiempoGuardado());
         
     }
+    
+    public List<Integer> tiempoComprar(int tiempo) {
+        Parqueo parqueo = new Parqueo();
+        int res = 0;
+        try {
+            for (Parqueo i : parqueo.getListaParqueos()) {
+                if (i.getTiempoMinimoMinutos() != 0){
+                    while (tiempo >= i.getTiempoMinimoMinutos()) {
+                        tiempo -= i.getTiempoMinimoMinutos(); // Restar el tiempo mínimo
+                        res += i.getTiempoMinimoMinutos();    // Acumular en res
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error al comprar");
+        }
+
+        // Crear una lista y agregar res y tiempo
+        List<Integer> resultado = new ArrayList<>();
+        resultado.add(res);
+        resultado.add(tiempo);
+
+        return resultado;
+    }
+    
+    
+    public LocalDateTime sacarTiempoRestante(String placa){
+        Parqueo parqueo = new Parqueo();
+        List<Parqueo> listaParqueos = parqueo.getListaParqueos();
+        List<Integer> listaEspacios = parqueo.getEspaciosParqueo();
+        
+        // Verificar si ambas listas no son nulas
+        if (listaParqueos != null && listaEspacios != null) {
+            for (Parqueo i : listaParqueos){
+                for (String k : this.getCarros()){
+                    if (i.getPlaca().equals(k) && i.getPlaca().equals(placa)){
+                        return this.getIngresoParqueo().plusMinutes(this.getTiempoComprado()).minusMinutes(getTiempoGuardado());
+                    }
+                }
+
+            }
+            
+        }
+        return null;
+    }
+    
     
     public void revisarCarros() {                   //NO DEBE SER CON HORA ACTUAL DEBE SER CON LA HORA QUE ELLOS COMPRARON
         Parqueo parqueo = new Parqueo();
@@ -87,9 +152,9 @@ public class UsuariosParqueo extends Usuarios{
 
                                     if (ingreso.isAfter(horaActual)) {
                                         System.out.println(horaActual+" "+ingreso);
-                                        System.out.println("El tiempo de estacionamiento ya venció.");
+                                        System.out.println("El tiempo de estacionamiento ya vencio.");
                                     } else if (ingreso.isBefore(horaActual)) {
-                                        System.out.println("Aún no ha vencido.");
+                                        System.out.println("Aun no ha vencido.");
                                         System.out.println(horaActual+" "+ingreso);
                                     } else {
                                         System.out.println("El tiempo de estacionamiento coincide con la hora actual.");
@@ -104,7 +169,7 @@ public class UsuariosParqueo extends Usuarios{
         }
     }
     
-    public void desaparcar(){
+    public void desaparcar(){ //Sin terminar
         LocalDateTime horaInicial = ingresoParqueo;
     }
     
@@ -119,7 +184,19 @@ public class UsuariosParqueo extends Usuarios{
     } 
     
     public String toStringUserParqueo(){
-        return "UsuarioParqueo: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin() + " " + getTarjeta() + " " + getTarjetaVencimiento() + " " + getCodigoVal();
+        return "UsuarioParqueo: " +  getNombre() 
+                             + " "+  getApellidos() 
+                             +" "+   getTelefono() 
+                             + " " + getCorreo() 
+                             +" "+   getDireccionFisica() 
+                             +" "+   getIdUsuario() 
+                             + " " + getPin() 
+                             + " " + getTarjeta() 
+                             + " " + getTarjetaVencimiento() 
+                             + " " + getCodigoVal() 
+                             + " " + getTiempoGuardado() 
+                             +" "+   getTiempoComprado() 
+                             + "\n" + toStringCarros();
     }
     
     public String toStringUsuariosParqueo(){
@@ -211,6 +288,14 @@ public class UsuariosParqueo extends Usuarios{
     }
 
     //setters 
+    public void setTiempoGuardado(int pTiempoGuardado){
+        tiempoGuardado = pTiempoGuardado;
+    }
+    
+    public void setTiempoComprado(int pTiempoComprado){ //FALTA LOGICA
+        tiempoComprado = pTiempoComprado;
+    }
+    
     
     public void setTarjeta(long pTarjeta){ 
         String cantidad = String.valueOf(pTarjeta);
@@ -282,7 +367,16 @@ public class UsuariosParqueo extends Usuarios{
     }  
     
     public LocalDateTime getIngresoParqueo(){
+        
         return this.ingresoParqueo;
     } 
+    
+    public int getTiempoGuardado(){
+        return tiempoGuardado;
+    }
+    
+    public int getTiempoComprado(){
+        return tiempoComprado;
+    }
     
 }

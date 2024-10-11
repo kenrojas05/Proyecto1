@@ -5,7 +5,7 @@ package parqueoscallejeros;
 import java.util.regex.Matcher; //operaciones de match (verificar si concuerdan) realizado en una secuencia que interpreta un patron
 import java.util.regex.Pattern; // una expresion regular compilada (para ser usada en matcher en este caso); 
 
-import java.util.ArrayList;
+import java.util.ArrayList; //Listas
 import java.util.List;
 
 public class Usuarios extends Parqueo{

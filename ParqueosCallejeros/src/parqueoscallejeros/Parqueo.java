@@ -4,11 +4,12 @@ package parqueoscallejeros;
 //import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.time.LocalDateTime;
 
 public class Parqueo {
     private String placa;
     private int espacio; 
+    private LocalDateTime salida;
     
     private int precioHora; //entero PAR
     private String horaInicio; // hh:mm
@@ -21,20 +22,54 @@ public class Parqueo {
     
     Parqueo(){}
     
-    Parqueo(String pPlaca, int pEspacio, int pPrecioHora, String pHoraInicio, String pHoraFinal, int pTiempoMinimoMinutos, int pCostoMulta){
+    Parqueo(String pPlaca, int pEspacio, int pPrecioHora, String pHoraInicio, String pHoraFinal, int pTiempoMinimoMinutos, int pCostoMulta){ //total
         setPlaca(pPlaca);
         setEspacio(pEspacio);
         setPrecioHora(pPrecioHora);
         setHoraInicio(pHoraInicio);
         setHoraFinal(pHoraFinal);
         setTiempoMinimoMinutos(pTiempoMinimoMinutos);
-        setCostoMulta(pCostoMulta);
-        
-        
+        setCostoMulta(pCostoMulta); 
+    }
+    
+    Parqueo(String pPlaca, int pEspacio){ //Parquear
+        setPlaca(pPlaca);
+        setEspacio(pEspacio); 
+    }
+    
+    Parqueo(int pPrecioHora, String pHoraInicio, String pHoraFinal, int pTiempoMinimoMinutos, int pCostoMulta){ //Basico
+        setPrecioHora(pPrecioHora);
+        setHoraInicio(pHoraInicio);
+        setHoraFinal(pHoraFinal);
+        setTiempoMinimoMinutos(pTiempoMinimoMinutos);
+        setCostoMulta(pCostoMulta); 
+    }
+    
+    public void setHoraSalida(LocalDateTime pSalida){
+        salida = pSalida;
+    }
+    
+    public LocalDateTime getHoraSalida(){
+        return salida;
+    }
+    
+    
+    public void establecerParqueos(){ //El administrador digita los datos para el parqueo pero por si hubiera un parqueo con datos unicos...
+        for (Parqueo i : getListaParqueos()){
+            if (i.getPrecioHora() != 0 || i.getHoraInicio() != null || i.getHoraFinal() != null || i.getTiempoMinimoMinutos() != 0 || i.getCostoMulta() == 0){
+                for (Parqueo j : getListaParqueos()){
+                    j.setPrecioHora(i.getPrecioHora()); 
+                    j.setHoraInicio(i.getHoraInicio());
+                    j.setHoraFinal(i.getHoraFinal());
+                    j.setTiempoMinimoMinutos(i.getTiempoMinimoMinutos());
+                    j.setCostoMulta(i.getCostoMulta());
+                }
+            }
+        }
     }
     
     public String toStringParqueo(){
-        return getPlaca()+" "+getPrecioHora()+" "+getHoraInicio()+" "+getHoraFinal()+" "+getTiempoMinimoMinutos()+" "+getCostoMulta()+" " ;
+        return getPlaca()+" "+ getEspacio() +" "+getPrecioHora()+" "+getHoraInicio()+" "+getHoraFinal()+" "+getTiempoMinimoMinutos()+" "+getCostoMulta()+" " ;
     }
     
     public String toStringEspacios(){
@@ -136,6 +171,8 @@ public class Parqueo {
         }
         lista.add(parqueo);
     }
+    
+    
     
     //getters
     
