@@ -8,6 +8,11 @@ import java.util.regex.Pattern; // una expresion regular compilada (para ser usa
 import java.util.ArrayList; //Listas
 import java.util.List;
 
+/**
+ * @author Kendall Ariel Rojas Cartin
+ * 
+ **/
+
 public class Usuarios extends Parqueo{
     //variables
     private String nombre; //de 2 a 20 caracteres
@@ -22,7 +27,23 @@ public class Usuarios extends Parqueo{
     
     private static List<Usuarios> listaUsuarios = new ArrayList(); //para guardar a cada cuenta/usuario
     
-    Usuarios(){}
+    /**
+     * Constructo de usuario sin parametros
+     **/
+    
+    Usuarios(){} //se realizo un constructor no personalizado para el uso de programas de este en otros.
+    
+    /**
+     * Constructor de clase y ademas agrega el usuario a la lista (Usuario persona)
+     * @param pNombre String: El nombre del usuario de 2 a 20 caracteres
+     * @param pApellidos String: Los apellidos del usuario de 1 a 40 caracteres
+     * @param pTelefono int: numero de telefono del usuario de 8 digitos exactos
+     * @param pCorreo String: Correo del usuario con el debido formato: parte1@parte2, parte1 y parte2 son strings con un tamaño mínimo de 3 caracteres cada uno 
+     * @param pDireccionFisica String: Direccion fisica del usuario de 5 a 60 caracteres
+     * @param pIdUsuario String: Identificacion del usuario 2 a 25 caracteres
+     * @param pin String: pin del usuario de 4 caracteres exactos
+     * 
+     **/
     
     Usuarios(String pNombre, String pApellidos, int pTelefono, String pCorreo, String pDireccionFisica, String pIdUsuario, String pin){
         setNombre(pNombre);
@@ -36,6 +57,12 @@ public class Usuarios extends Parqueo{
         agregarUsuario(this);
     }
     
+    /**
+     * Para agregar el usuario a la lista de usuarios 
+     * @param nuevoUsuario Usuarios: El usuario a agregar
+     * @throws IllegalArgumentException Si el usuario ya fue creado
+     **/
+    
     public void agregarUsuario(Usuarios nuevoUsuario){
         for (Usuarios i : listaUsuarios){
             if (i.getPin().equals(nuevoUsuario.getPin()) && i.getIdUsuario().equals(nuevoUsuario.getIdUsuario())){
@@ -46,6 +73,13 @@ public class Usuarios extends Parqueo{
 
         listaUsuarios.add(nuevoUsuario);
     }
+    
+    /**
+     * Verifica si el usuario existe y si es asi lo regresa casteado a su tipo de objeto/clase
+     * @param id String: identificacion del usuario
+     * @param pin String: pin del usuario
+     * @return el usuario dependiendo del tipo (Admin/inspector/usuariosParqueo) o solo usuario de no poder
+     **/
     
     public static Usuarios existeUsuario(String id, String pin){ //devuelve el usuario casteado a su tipo con su objeto
         Usuarios usuario = null;
@@ -61,18 +95,28 @@ public class Usuarios extends Parqueo{
                     Administrador admin = (Administrador) usuario;
                     return admin;
                 }  
-            /*    if (usuario instanceof Inspector){ //Inspector no existe de momento...
+                if (usuario instanceof Inspector){ //Inspector no existe de momento...
                     Inspector inspec = (Inspector) usuario;
                     return inspec;
-                } */ 
+                }  
             }
         }
         return usuario;
     }
     
+    /**
+     * toString del usuario base
+     * @return String del usuario base
+     **/
+    
     public String toString(){
         return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin();
     }
+    
+    /**
+     * toString de los usuarios del sistema
+     * @return String usuarios
+     **/
     
     public String toStringUsuarios(){
         String res = "";
@@ -84,6 +128,13 @@ public class Usuarios extends Parqueo{
     
     //setters
     
+    /**
+     * Set nombre del usuario
+     * @param pNombre String: nombre 
+     * @throws IllegalArgumentException Si el nombre esta vacio o es invalido
+     * @throws IllegalArgumentException Si el nombre tiene una cantidad erronea de caracteres
+     **/
+    
     public void setNombre(String pNombre){ 
         if (pNombre == null || pNombre.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
             throw new IllegalArgumentException("El nombre esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
@@ -93,6 +144,13 @@ public class Usuarios extends Parqueo{
         }
         else{nombre = pNombre;}
     }
+    
+    /**
+     * Set apellidos del usuario
+     * @param pApellidos String: Apellidos del usuario
+     * @throws IllegalArgumentException Si el apellido esta vacio o es invalido
+     * @throws IllegalArgumentException Si el apellido tiene una cantidad erronea de caracteres
+     **/
     
     public void setApellidos(String pApellidos){ 
         if (pApellidos == null || pApellidos.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
@@ -104,6 +162,14 @@ public class Usuarios extends Parqueo{
         else{apellidos = pApellidos;}
 
     }
+    
+    /**
+     * Set telefono del usuario
+     * @param pTelefono int: El telefono del usuario
+     * @throws IllegalArgumentException Si el telefono esta vacio
+     * @throws IllegalArgumentException Si el telefono no tiene 8 digitos
+     **/
+    
     public void setTelefono(int pTelefono){                                                                           //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
          String cantidad = String.valueOf(pTelefono);
         if (cantidad == null || cantidad.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
@@ -114,6 +180,14 @@ public class Usuarios extends Parqueo{
         }
         else{telefono = pTelefono;}
     }
+    
+    /**
+     * Set el correo del usuario
+     * @param pCorreo String: Correo del usuario
+     * @throws IllegalArgumentException Si el correo esta vacio o es invalido
+     * @throws IllegalArgumentException Si el correo es invalido
+     **/
+    
     public void setCorreo(String pCorreo){ 
         if (pCorreo == null || pCorreo.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
             throw new IllegalArgumentException("El correo esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
@@ -128,6 +202,14 @@ public class Usuarios extends Parqueo{
         else{correo = pCorreo;}
         
     }
+    
+    /**
+     * Set direccion fisica
+     * @param pDireccionFisica
+     * @throws IllegalArgumentException Si la direccion esta vacia o es invalida
+     * @throws IllegalArgumentException Si el tamano es invalido
+     **/
+    
     public void setDireccionFisica(String pDireccionFisica){ 
         if (pDireccionFisica == null || pDireccionFisica.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
             throw new IllegalArgumentException("Direccion vacia o invalida");//se utiliza para mandar una excepcion al sistema 
@@ -139,6 +221,13 @@ public class Usuarios extends Parqueo{
         else{direccionFisica = pDireccionFisica;}
     }
     
+    /**
+     * Set id del usuario
+     * @param pIdUsuario el string del usuario
+     * @throws IllegalArgumentException Si el id esta vacio o es invalido
+     * @throws IllegalArgumentException Si el id tiene una cantidad erronea de caracteres
+     **/
+    
     public void setIdUsuario(String pIdUsuario){
         if (pIdUsuario == null || pIdUsuario.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
             throw new IllegalArgumentException("El ID esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
@@ -148,6 +237,12 @@ public class Usuarios extends Parqueo{
         }
         else{idUsuario = pIdUsuario;}
     }
+    
+    /**
+     * Set pin del usuario
+     * @param pin String: pone el pin
+     * @throws IllegalArgumentException Si el pin tiene una cantidad erronea de caracteres o es invalido
+     **/
     
     public void setPin(String pin){
         if (pin.length()!=4 || pin == null){
@@ -159,27 +254,74 @@ public class Usuarios extends Parqueo{
     
     //getters
     
+    /**
+     * Get nombre
+     * @return String: nombre
+     **/
+    
     public String getNombre(){
         return nombre;
     }
+    
+    /**
+     * Get Apellidos
+     * @return String: Apellidos
+     **/
+    
     public String getApellidos(){
         return apellidos;
     }
+    
+    /**
+     * Get telefono
+     * @return int: telefono
+     **/
+    
     public int getTelefono(){
         return telefono;
     }
+    
+    /**
+     * Get Correo
+     * @return String correo
+     **/
+    
     public String getCorreo(){
         return correo;
     }
+    
+    /**
+     * Get Direccion fisica
+     * @return String: direccionFisica
+     **/
+    
     public String getDireccionFisica(){
         return direccionFisica;
     }
+    
+    /**
+     * Get id usuario
+     * @return String idUsuario
+     **/
+    
     public String getIdUsuario(){
         return idUsuario;
     }
+    
+    /**
+     * Get pin
+     * @return String pin
+     **/
+    
     public String getPin(){
         return pin;
     }
+    
+    /**
+     * Get usuarios del sistema
+     * @return List Usuarios listaUsuarios
+     **/
+    
     public List<Usuarios> getUsuarios(){
         return listaUsuarios;
     }

@@ -2,6 +2,10 @@
 package parqueoscallejeros;
 
 
-public class Inspector {
+/**
+ * @author Kendall Ariel Rojas Cartin
+ **/
+
+public class Inspector extends Usuarios {
     
 }

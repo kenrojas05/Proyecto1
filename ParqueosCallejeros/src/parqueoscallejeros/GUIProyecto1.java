@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Kendall Ariel Rojas Cartin
+ **/
+
 public class GUIProyecto1 extends javax.swing.JFrame {
 
     /**
