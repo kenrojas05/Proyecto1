@@ -12,6 +12,8 @@ import java.util.List;
  * @author Kendall Ariel Rojas Cartin
  **/
 
+//NO SE DOCUMENTO COMO JAVADOC PERO SI POSEE ALGUNA DOCUMENTACION INTERNA
+
 public class GUIProyecto1 extends javax.swing.JFrame {
 
     /**
@@ -35,9 +37,9 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         tituloLabel = new javax.swing.JLabel();
         usuarioButton = new javax.swing.JButton();
         adminButton = new javax.swing.JButton();
-        inspectButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         volverButton = new javax.swing.JButton();
+        indicadorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,13 +64,6 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             }
         });
 
-        inspectButton.setText("Inspector");
-        inspectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inspectButtonActionPerformed(evt);
-            }
-        });
-
         exitButton.setText("Exit");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,25 +78,32 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             }
         });
 
+        indicadorLabel.setFont(new java.awt.Font("Segoe UI Symbol", 1, 10)); // NOI18N
+
         javax.swing.GroupLayout fondoPanelLayout = new javax.swing.GroupLayout(fondoPanel);
         fondoPanel.setLayout(fondoPanelLayout);
         fondoPanelLayout.setHorizontalGroup(
             fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fondoPanelLayout.createSequentialGroup()
-                .addGap(0, 278, Short.MAX_VALUE)
-                .addComponent(tituloLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181)
-                .addComponent(volverButton)
-                .addGap(34, 34, 34)
-                .addComponent(exitButton)
-                .addGap(31, 31, 31))
-            .addGroup(fondoPanelLayout.createSequentialGroup()
-                .addGap(420, 420, 420)
                 .addGroup(fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(inspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(adminButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(fondoPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(indicadorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(fondoPanelLayout.createSequentialGroup()
+                        .addGroup(fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(fondoPanelLayout.createSequentialGroup()
+                                .addGap(0, 278, Short.MAX_VALUE)
+                                .addComponent(tituloLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(fondoPanelLayout.createSequentialGroup()
+                                .addGap(420, 420, 420)
+                                .addGroup(fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(adminButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(usuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(181, 181, 181)
+                        .addComponent(volverButton)
+                        .addGap(34, 34, 34)
+                        .addComponent(exitButton)))
+                .addGap(31, 31, 31))
         );
         fondoPanelLayout.setVerticalGroup(
             fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +121,9 @@ public class GUIProyecto1 extends javax.swing.JFrame {
                         .addComponent(usuarioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(adminButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(inspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
+                .addComponent(indicadorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,8 +147,7 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     private void deshabilitarInicio(){ //deshabilita y pone invisibles los botones del inicio sin contar volver y exit
-            inspectButton.setEnabled(false);
-            inspectButton.setVisible(false);
+
             adminButton.setEnabled(false);
             adminButton.setVisible(false);
             usuarioButton.setEnabled(false);
@@ -154,8 +155,7 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     }
     
     private void habilitarInicio(){ //habilita y pone visibles los botones del inicio sin contar volver y exit
-            inspectButton.setEnabled(true);
-            inspectButton.setVisible(true);
+
             adminButton.setEnabled(true);
             adminButton.setVisible(true);
             usuarioButton.setEnabled(true);
@@ -165,9 +165,14 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     private void deshabilitarComponentes(){ // deshabilita y pone invisibles los componentes ignorando exit volver y el titulo label
     Component[] listaComponentes = fondoPanel.getComponents(); //consigue los componentes del JPanel fondoPabel
         for (Component i : listaComponentes) {
-            if (i != exitButton && i != tituloLabel && i != volverButton){
+            if (i != exitButton && i != tituloLabel && i != volverButton && i != indicadorLabel){
                 i.setVisible(false);
                 i.setEnabled(false);
+            }
+            if (i == indicadorLabel){
+                JLabel label = (JLabel) i;
+                label.setText("");
+                label.setForeground(Color.white);
             }
         }
     }
@@ -204,83 +209,91 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     
     private void regresar(JButton boton, java.awt.event.ActionEvent evento) { //regresa al menu anterior (sin finalizar)
         Component[] listaComponentes = fondoPanel.getComponents(); //consigue los componentes del JPanel fondoPabel
-        for (Component i : listaComponentes) {
-            if (i instanceof JButton){
-                if (((JButton) i).getText() == "Regresar"){ //usando casting par sacar getText()
-                    i.setVisible(false);
-                    i.setEnabled(false);
+            for (Component i : listaComponentes) {
+                if (i instanceof JButton){
+                    if (((JButton) i).getText() == "Regresar"){ //usando casting par sacar getText()
+                        i.setVisible(false);
+                        i.setEnabled(false);
+                    }
+
                 }
-                
             }
-        }
-        
-    javax.swing.JButton regresarButton = new javax.swing.JButton(); 
-    
-    regresarButton.setText("Regresar");  // Sin texto inicial
-                           //x   y    horiz vertical
-    regresarButton.setBounds(80, 50, 100, 30); // Ajustar el número de columnas (ancho del campo)
-    
-    regresarButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
-       public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (boton.getText().equals("Crear Usuario")) {
-                deshabilitarComponentes();
-                usuarioButtonActionPerformed(evento); 
-            }
-            if (boton.getText().equals("Iniciar Sesion")) {
-                deshabilitarComponentes();
-                usuarioButtonActionPerformed(evento); 
-            }
-            if (boton.getText().equals("Siguiente ->")) {
-                deshabilitarComponentes();
-                usarUsuarioActionPerformed(evento, boton); 
-            }
-       }
-    });
-    fondoPanel.add(regresarButton); //lo añade y recarga el panel
-    fondoPanel.revalidate();
-    fondoPanel.repaint();
+
+        javax.swing.JButton regresarButton = new javax.swing.JButton(); 
+
+        regresarButton.setText("Regresar");  // Sin texto inicial
+                               //x   y    horiz vertical
+        regresarButton.setBounds(80, 50, 100, 30); // Ajustar el número de columnas (ancho del campo)
+
+        regresarButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (boton.getText().equals("Crear Usuario")) {
+                    deshabilitarComponentes();
+                    usuarioButtonActionPerformed(evento); 
+                }
+                if (boton.getText().equals("Iniciar Sesion")) {
+                    deshabilitarComponentes();
+                    usuarioButtonActionPerformed(evento); 
+                }
+                if (boton.getText().equals("Iniciar Usuario")) { //Siguiente
+                    deshabilitarComponentes();
+                    usarUsuarioActionPerformed(evento, boton); 
+                }
+                if (boton.getText().equals("Crear Administrador")){
+                    deshabilitarComponentes();
+                    adminButtonActionPerformed(evento);
+                }
+                if (boton.getText().equals("Iniciar Sesion Admin")){
+                    deshabilitarComponentes();
+                    adminButtonActionPerformed(evento);
+                }
+                if (boton.getText().equals("Iniciar Admin")){
+                    deshabilitarComponentes();
+                    iniciarSesionAdminButtonActionPerformed(evento);
+                }
+           }
+        });
+        fondoPanel.add(regresarButton); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
     }
     
     
     private void usuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioButtonActionPerformed
 
-    
-    javax.swing.JButton crearUsuario = new javax.swing.JButton(); //boton de crear usuario 
-    javax.swing.JButton usarUsuario = new javax.swing.JButton(); //no usado de momento
-    
-    crearUsuario.setText("Crear Usuario");
-    crearUsuario.setBounds(50, 100, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
-    
-    crearUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
-       public void actionPerformed(java.awt.event.ActionEvent evt) {
-            crearUsuarioActionPerformed(evt);
-            regresar(crearUsuario,evt);    
-       }
-    }                              );
-    usarUsuario.setText("Iniciar Sesion");
-    usarUsuario.setBounds(50, 150, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
-    
-    usarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
-       public void actionPerformed(java.awt.event.ActionEvent evt) {
-            usarUsuarioActionPerformed(evt, usarUsuario);
-            regresar(usarUsuario,evt);    
-       }
-    }                              );
-    
-    
-    fondoPanel.add(crearUsuario); //los añade y recarga el panel
-    fondoPanel.add(usarUsuario); 
-    fondoPanel.revalidate();
-    fondoPanel.repaint();
-    
-    tituloLabel.setText("Usuario");
-    deshabilitarInicio();
+        javax.swing.JButton crearUsuario = new javax.swing.JButton(); //boton de crear usuario 
+        javax.swing.JButton usarUsuario = new javax.swing.JButton(); //no usado de momento
+
+        crearUsuario.setText("Crear Usuario");
+        crearUsuario.setBounds(50, 100, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+
+        crearUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearUsuarioActionPerformed(evt);
+                regresar(crearUsuario,evt);    
+           }
+        }  );
+
+        usarUsuario.setText("Iniciar Sesion");
+        usarUsuario.setBounds(50, 150, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+
+        usarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usarUsuarioActionPerformed(evt, usarUsuario);
+                regresar(usarUsuario,evt);    
+           }
+        }                              );
+
+
+        fondoPanel.add(crearUsuario); //los añade y recarga el panel
+        fondoPanel.add(usarUsuario); 
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+        tituloLabel.setText("Usuario");
+        deshabilitarInicio();
 
     }//GEN-LAST:event_usuarioButtonActionPerformed
-
-    private void inspectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inspectButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inspectButtonActionPerformed
     private void usarUsuarioActionPerformed(java.awt.event.ActionEvent evt, JButton button){
         System.out.println("Inicio sesion jeje");
         
@@ -335,20 +348,18 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         }
         
         //label para indicar errores o exito
-        javax.swing.JLabel indicadorLabel = new javax.swing.JLabel();
         indicadorLabel.setText("");
         indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
         indicadorLabel.setForeground(java.awt.Color.WHITE); 
-        indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
         
-        fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
         fondoPanel.revalidate();
         fondoPanel.repaint();
         
         
         javax.swing.JButton siguienteButton = new javax.swing.JButton(); //boton para ingresar datoss
     
-        siguienteButton.setText("Siguiente ->"); 
+        siguienteButton.setText("Iniciar Usuario"); 
         siguienteButton.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
 
         fondoPanel.add(siguienteButton); //lo añade y recarga el panel
@@ -360,7 +371,7 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             listadoSesionF.clear(); //limpia la lista
             Collections.addAll(listadoSesionF, idField, pinField); //la vuelve a ingresar para actualizar las lista
             System.out.println("Siguiente " + idField.getText() +" "+ pinField.getText());
-            siguienteActionPerformed(evt,listadoSesionF,indicadorLabel, siguienteButton);
+            siguienteActionPerformed(evt,listadoSesionF, siguienteButton);
             regresar(siguienteButton, evt);
             }
         });
@@ -369,28 +380,41 @@ public class GUIProyecto1 extends javax.swing.JFrame {
 
     }
     
-    private void siguienteActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, JLabel pIndicadorLabel, JButton siguienteButton){
+    private void siguienteActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, JButton siguienteButton){
         //label para indicar errores o exito
-        javax.swing.JLabel indicadorLabel = new javax.swing.JLabel();
         indicadorLabel.setText("");
         indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
         indicadorLabel.setForeground(java.awt.Color.WHITE); 
-        indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
         
-        fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
         fondoPanel.revalidate();
         fondoPanel.repaint();
         
         try{
             String id = pListadoField.get(0).getText();
             String pin = pListadoField.get(1).getText();
-            System.out.println("Inicio sesion casi !");
             
-            Usuarios user = Usuarios.existeUsuario(id, pin);
+            Usuarios user;
+            user = Usuarios.existeUsuario(id, pin);
+            UsuariosParqueo nuevoUser = null;
+            if (!(user instanceof UsuariosParqueo) && user!=null){
+                throw new IllegalArgumentException("No es usuario del parqueo");
+            }
+            
             if (user != null) {
-                System.out.println("Inicio sesión exitoso!");
+                
+                for (UsuariosParqueo i : UsuariosParqueo.getUsuariosParqueo()){
+                    if (user.getIdUsuario().equals(i.getIdUsuario())&&user.getPin().equals(user.getPin())){
+                        nuevoUser = i;
+                    }
+                }
+                
+                System.out.println("Inicio sesion exitoso!");
+                deshabilitarComponentes();
                 regresar(siguienteButton, evt);
-                System.out.println("Inicio!");
+                indicadorLabel.setText("Inicio sesion exitoso!");
+                indicadorLabel.setForeground(java.awt.Color.GREEN);
+                usuarioInicioActionPerformed(evt, nuevoUser);
                 
             } 
             else {
@@ -400,25 +424,243 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            pIndicadorLabel.setText(e.getMessage());
-            pIndicadorLabel.setForeground(java.awt.Color.RED);
+            indicadorLabel.setText(e.getMessage());
+            indicadorLabel.setForeground(java.awt.Color.RED);
             return;
         }
         
         for (JTextField i : pListadoField ){ //vaciar todo
             i.setText("");     
         }
-        pIndicadorLabel.setText("Inicio Sesion exitoso!");
-        pIndicadorLabel.setForeground(java.awt.Color.GREEN);
 
     }
     
+    private void usuarioInicioActionPerformed(java.awt.event.ActionEvent evt, UsuariosParqueo user){
+        indicadorLabel.setText("");
+        indicadorLabel.setForeground(java.awt.Color.WHITE);
+        
+        indicadorLabel.setText(user.toStringCarros());
+        
+
+
+        javax.swing.JButton parquearButton = new javax.swing.JButton(); //boton de crear usuario 
+        javax.swing.JButton repotesButton = new javax.swing.JButton(); 
+
+        parquearButton.setText("Parquear Vehiculo");
+        parquearButton.setBounds(50, 100, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+        
+        repotesButton.setText("Reportes");
+        repotesButton.setBounds(50, 250, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+
+        parquearButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               
+               //limpiar pantalla
+               
+               deshabilitarComponentes();
+               JButton parquear = buscarBoton("Parquear Vehiculo");
+               JButton reportes = buscarBoton("Reportes");
+               
+               reportes.setEnabled(true);
+               reportes.setVisible(true);
+               
+               parquear.setEnabled(true);
+               parquear.setVisible(true);
+               
+               regresar(buscarBoton("Iniciar Usuario"),evt);
+               
+               // Crear los campos de entrada para el parquear
+                javax.swing.JTextField placaParquearField = new javax.swing.JTextField("");
+                javax.swing.JTextField espacioField = new javax.swing.JTextField("");
+                javax.swing.JTextField tiemporComprarField = new javax.swing.JTextField("");
+                
+                javax.swing.JLabel placaParquearLabel = new javax.swing.JLabel("Ingrese Placa");
+                placaParquearLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                placaParquearLabel.setForeground(Color.white);
+                
+                javax.swing.JLabel espacioLabel = new javax.swing.JLabel("Ingrese Espacio de Parqueo");
+                espacioLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                espacioLabel.setForeground(Color.white);
+                
+                javax.swing.JLabel tiemporComprarLabel = new javax.swing.JLabel("Ingrese el tiempo a comprar");
+                tiemporComprarLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                tiemporComprarLabel.setForeground(Color.white);
+                
+                javax.swing.JButton confirmarParqueoButton = new javax.swing.JButton("Confirmar Parqueo");
+              
+
+                // Establecer posiciones de los campos y etiquetas
+                placaParquearLabel.setBounds(500, 50, 200, 30);
+                placaParquearField.setBounds(550, 100, 200, 30);
+                espacioLabel.setBounds(500, 150, 200, 30);
+                espacioField.setBounds(550, 200, 200, 30);
+                tiemporComprarLabel.setBounds(500, 250, 200, 30);
+                tiemporComprarField.setBounds(550, 300, 200, 30);                
+                confirmarParqueoButton.setBounds(550, 400, 200, 30);
+
+                
+                confirmarParqueoButton.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        try {
+                            String placa = placaParquearField.getText();
+                            int espacioParqueo = Integer.parseInt(espacioField.getText());
+
+                            int tiempoComprado = Integer.parseInt(tiemporComprarField.getText());
+
+                            System.out.println("Parqueando");
+                            System.out.println(placa+"  "+espacioParqueo+" "+tiempoComprado);
+                            user.Parquear(placa, espacioParqueo, tiempoComprado);
+                            
+                            
+                            Parqueo.guardarEnArchivo(Parqueo.getListaParqueos(), "Parqueo.txt");
+                            user.enviarCorreoDatos(user.getCorreo(), Parqueo.buscarParqueoPlaca(placa).toStringParqueo()+"\n Tiempo comprado: "+user.getTiempoComprado()+"\n Tiempo guardado: "+user.getTiempoGuardado());
+                            indicadorLabel.setText("Vehículo parqueado exitosamente!");
+                            
+                            placaParquearField.setText("");
+                            espacioField.setText("");
+                            tiemporComprarField.setText("");               
+
+                            
+                        } catch (Exception e) {
+                            System.out.println(e);
+                            indicadorLabel.setText(e.getMessage());
+                        }
+                    }
+                });
+                
+               
+               //Agregar vehiculo placa
+                javax.swing.JButton agregarCarroButton = new javax.swing.JButton(); 
+                agregarCarroButton.setText("Agregar Vehiculo");
+                agregarCarroButton.setBounds(850, 100, 200, 30);
+
+                javax.swing.JLabel placaLabel = new javax.swing.JLabel("Ingrese una placa");
+                placaLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                placaLabel.setForeground(Color.white);
+                placaLabel.setBounds(850, 200, 200, 30);
+                
+                javax.swing.JTextField placaField = new javax.swing.JTextField(""); 
+                placaField.setBounds(850, 150, 200, 30);
+                
+                agregarCarroButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    
+                    try{
+                        
+                        String placa = placaField.getText();
+                        user.setCarro(placa);
+                        indicadorLabel.setText("Vehiculo Ingresado!");
+                        placaField.setText("");//limpia el field
+                        System.out.println(user.toStringCarros());
+                        user.actualizarVehiculos(user);
+                        System.out.println("Cargado!" + user.toStringUserParqueo());
+                        Parqueo.guardarEnArchivo(UsuariosParqueo.getUsuariosParqueo(), "UsuariosParqueo.txt");
+                        System.out.println("Cargado!" + user.toStringCarros());
+                    }
+                    catch(Exception e){
+                        indicadorLabel.setText(e.getMessage());
+                    }
+                    }
+                });
+                
+                fondoPanel.add(placaParquearLabel); //los añade y recarga el panel
+                fondoPanel.add(placaParquearField);
+                fondoPanel.add(espacioLabel);
+                fondoPanel.add(espacioField);
+                fondoPanel.add(confirmarParqueoButton);
+                fondoPanel.add(tiemporComprarLabel);
+                fondoPanel.add(tiemporComprarField);
+                fondoPanel.add(agregarCarroButton); 
+                fondoPanel.add(placaField);
+                fondoPanel.add(placaLabel);
+                fondoPanel.revalidate();
+                fondoPanel.repaint();
+                
+                if (user.getCarros().isEmpty()){
+                    
+                   indicadorLabel.setText("No posees ningun carro");
+
+                   
+                   
+                }
+                else if (user.getCarros().getFirst().equals(user.getCarros().getLast())) {//Si solo tiene un elemento
+                   
+                   indicadorLabel.setText("Tienes un vehiculo: "+ user.toStringCarros());
+                   System.out.println("Parquear");
+               }
+           }
+        });
+
+        repotesButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               //Limpiar pantalla
+               System.out.println("Reportes");
+               deshabilitarComponentes();
+               JButton reportes = buscarBoton("Reportes");
+               JButton parquear = buscarBoton("Parquear Vehiculo");
+               regresar(buscarBoton("Iniciar Usuario"),evt);
+               
+               reportes.setEnabled(true);
+               reportes.setVisible(true);
+               
+               parquear.setEnabled(true);
+               parquear.setVisible(true);
+               
+               //Crear botones y labels
+               
+                javax.swing.JLabel parqueosDisponiblesLabel = new javax.swing.JLabel("Espacios del Parqueo");
+                parqueosDisponiblesLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                parqueosDisponiblesLabel.setForeground(Color.white);
+                
+                javax.swing.JButton generarReporteEspaciosButton = new javax.swing.JButton("Generar Reporte");
+               
+                parqueosDisponiblesLabel.setBounds(300, 100, 250, 30);
+                generarReporteEspaciosButton.setBounds(550, 100, 150, 30);
+                
+                //Dar funcion al boton de reporte
+                
+                
+                generarReporteEspaciosButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+                   public void actionPerformed(java.awt.event.ActionEvent evt) {
+                       try{
+                            Usuarios.reportePDF("Espacios Disponibles del parqueo:  \n" + Parqueo.toStringEspaciosDisponibles(), "Reporte_Espacios_Disponibles");
+                            indicadorLabel.setForeground(Color.green);
+                            indicadorLabel.setText("PDF Generado con exito!");
+                       }
+                       catch(Exception e){
+                           indicadorLabel.setText(e.getMessage());
+                           indicadorLabel.setForeground(Color.red);
+                       }
+                   }
+                });
+                
+                
+                
+                
+                fondoPanel.add(parqueosDisponiblesLabel);
+                fondoPanel.add(generarReporteEspaciosButton);
+                fondoPanel.revalidate();
+                fondoPanel.repaint();
+               
+               
+           }
+        });
+
+
+        fondoPanel.add(parquearButton); //los añade y recarga el panel
+        fondoPanel.add(repotesButton); 
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+        tituloLabel.setText("Usuario");
+    }
     
+
     private void crearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                              
         //desaparecer botones
         esconderBoton("Crear Usuario");
         esconderBoton("Iniciar Sesion");
-        
+
         //creacion de campos para escribir jtextfield y labels
         javax.swing.JTextField nombreField = new javax.swing.JTextField(); 
         javax.swing.JTextField apellidosField = new javax.swing.JTextField(); 
@@ -427,12 +669,12 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         javax.swing.JTextField direccionField = new javax.swing.JTextField(); 
         javax.swing.JTextField idField = new javax.swing.JTextField(); 
         javax.swing.JTextField pinField = new javax.swing.JTextField(); 
-        
+
         javax.swing.JTextField tajetaField = new javax.swing.JTextField();
         javax.swing.JTextField vencimientoField = new javax.swing.JTextField();
         javax.swing.JTextField validacionField = new javax.swing.JTextField();
-        
-        
+
+
         javax.swing.JLabel nombreLabel = new javax.swing.JLabel();
         nombreLabel.setText("Nombre");
         javax.swing.JLabel apellidosLabel = new javax.swing.JLabel(); 
@@ -457,26 +699,26 @@ public class GUIProyecto1 extends javax.swing.JFrame {
         //listas que guardan los field y labels
         List<JTextField> listadoField = new ArrayList();
         List<JLabel> listadoLabelUser = new ArrayList();
-        
+
         List<JLabel> listadoLabelTarjeta = new ArrayList();
         List<JTextField> listadoFieldTarjeta = new ArrayList();
-        
-        
+
+
         //guardar los elementos para su creacion
         Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField);
         Collections.addAll(listadoLabelUser, nombreLabel, apellidosLabel, telefonoLabel, correoLabel, direccionLabel, idLabel, pinLabel);
-        
+
         Collections.addAll(listadoLabelTarjeta, tajetaLabel, vencimientoLabel, validacionLabel);
         Collections.addAll(listadoFieldTarjeta, tajetaField, vencimientoField, validacionField);
-        
-        
+
+
         int y = 100; //para la separacion entre componentes Y
         for (JTextField i : listadoField){
 
             i.setText("");  // Sin texto inicial
             i.setEditable(true);  // Para que sea editable o se pueda escribir
             i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
-            
+
             i.setBounds(350, y, 200, 30); //(x,y,horizontal,vertical)
             y += 50;
             fondoPanel.add(i);
@@ -491,8 +733,8 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             i.setForeground(java.awt.Color.WHITE);  // Color
 
             i.setBounds(200, y, 250, 30);  // (x,y,horizontal,vertical)
-            
-            
+
+
             y += 50;
 
             fondoPanel.add(i); //lo añade y recarga el panel
@@ -506,8 +748,8 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             i.setForeground(java.awt.Color.WHITE);  // Color
 
             i.setBounds(600, y, 200, 30);  // (x,y,horizontal,vertical)
-            
-            
+
+
             y += 50;
 
             fondoPanel.add(i); //lo añade y recarga el panel
@@ -522,6 +764,359 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
 
             i.setBounds(800, y, 200, 30);  // (x,y,horizontal,vertical)
+
+
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+
+        javax.swing.JButton ingresarUsuario = new javax.swing.JButton(); //boton para ingresar datoss
+
+        ingresarUsuario.setText("Ingresar"); 
+        ingresarUsuario.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
+
+        //indica si salio bien o mal el ingreso
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+
+
+        fondoPanel.add(ingresarUsuario); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+
+        ingresarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    listadoField.clear(); //limpia la lista
+                    Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField); //la vuelve a ingresar para actualizar las lista
+                    ingresarButtonActionPerformed(evt ,  listadoField,listadoFieldTarjeta); //reciibe aparte del evento y la lista el label para indicar errores o si hay exito
+
+                    }
+                });
+
+
+    }
+
+    private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, List<JTextField> pListadoFieldTarjeta ) {                                           
+            //variables:
+                try {
+                    String nombre = pListadoField.get(0).getText();
+                    String apellidos = pListadoField.get(1).getText();
+                    String correo= pListadoField.get(3).getText();
+                    String direccionFisica = pListadoField.get(4).getText();
+                    String idUsuario = pListadoField.get(5).getText();
+                    String pin = pListadoField.get(6).getText();
+                    String tarjetaVencimiento = pListadoFieldTarjeta.get(1).getText();
+                    int telefono = Integer.parseInt(pListadoField.get(2).getText());
+                    long tarjeta = Long.parseLong(pListadoFieldTarjeta.get(0).getText());
+                    int codigoVal = Integer.parseInt(pListadoFieldTarjeta.get(2).getText());
+
+                    UsuariosParqueo nuevoUsuario = new UsuariosParqueo(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin,tarjeta,tarjetaVencimiento,codigoVal);
+                    System.out.println(nuevoUsuario.toString());
+                    System.out.println(nuevoUsuario.toStringUsuarios());
+
+                    nuevoUsuario.enviarCorreoDatos(correo,nuevoUsuario.datosUsuario(nuevoUsuario));
+
+                    Parqueo.guardarEnArchivo(UsuariosParqueo.getUsuariosParqueo(), "UsuariosParqueo.txt");
+                    Parqueo.guardarEnArchivo(Usuarios.getUsuarios(), "Usuarios.txt");
+
+                    indicadorLabel.setText("Usuario ingresado con exito! Se envio un correo!");
+                    indicadorLabel.setForeground(java.awt.Color.GREEN);
+
+                }
+                catch(NumberFormatException e){ //si el error es por el formato (telefono ya que solo recibe int)
+                        indicadorLabel.setText("Campos vacios ''!");
+                        indicadorLabel.setForeground(java.awt.Color.RED);
+                        return;
+                }
+
+                catch(Exception e){ //cualquier otro error
+                        indicadorLabel.setText(e.getMessage()); //solo el mensaje del error
+                        indicadorLabel.setForeground(java.awt.Color.RED);
+
+                        return;
+                }
+
+
+            for (JTextField i : pListadoField ){ //vaciar todo
+                i.setText("");     
+            }
+
+
+        }
+
+    
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
+
+        javax.swing.JButton crearAdmin = new javax.swing.JButton(); //boton de crear usuario 
+        javax.swing.JButton usarAdmin = new javax.swing.JButton(); //no usado de momento
+
+        crearAdmin.setText("Crear Administrador");
+        crearAdmin.setBounds(50, 100, 250, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+
+        crearAdmin.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearAdminButtonActionPerformed(evt);
+                regresar(crearAdmin,evt);    
+           }
+        }  );
+
+        usarAdmin.setText("Iniciar Sesion Admin");
+        usarAdmin.setBounds(50, 150, 250, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+
+        usarAdmin.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de crearUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iniciarSesionAdminButtonActionPerformed(evt);
+                regresar(usarAdmin,evt);    
+           }
+        }                              );
+
+
+        fondoPanel.add(crearAdmin); //los añade y recarga el panel
+        fondoPanel.add(usarAdmin); 
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+        tituloLabel.setText("Administrador");
+        deshabilitarInicio();
+    }//GEN-LAST:event_adminButtonActionPerformed
+    
+    private void crearAdminButtonActionPerformed(java.awt.event.ActionEvent evt){
+    //desaparecer botones
+        esconderBoton("Crear Administrador");
+        esconderBoton("Iniciar Sesion Admin");
+
+        //creacion de campos para escribir jtextfield y labels
+        javax.swing.JTextField nombreField = new javax.swing.JTextField(); 
+        javax.swing.JTextField apellidosField = new javax.swing.JTextField(); 
+        javax.swing.JTextField telefonoField = new javax.swing.JTextField(); 
+        javax.swing.JTextField correoField = new javax.swing.JTextField(); 
+        javax.swing.JTextField direccionField = new javax.swing.JTextField(); 
+        javax.swing.JTextField idField = new javax.swing.JTextField(); 
+        javax.swing.JTextField pinField = new javax.swing.JTextField(); 
+
+
+
+
+        javax.swing.JLabel nombreLabel = new javax.swing.JLabel();
+        nombreLabel.setText("Nombre");
+        javax.swing.JLabel apellidosLabel = new javax.swing.JLabel(); 
+        apellidosLabel.setText("Apellidos");
+        javax.swing.JLabel telefonoLabel = new javax.swing.JLabel();
+        telefonoLabel.setText("Telefono");
+        javax.swing.JLabel correoLabel = new javax.swing.JLabel(); 
+        correoLabel.setText("Correo");
+        javax.swing.JLabel direccionLabel = new javax.swing.JLabel(); 
+        direccionLabel.setText("Direccion Fisica");
+        javax.swing.JLabel idLabel = new javax.swing.JLabel(); 
+        idLabel.setText("ID");
+        javax.swing.JLabel pinLabel = new javax.swing.JLabel();
+        pinLabel.setText("PIN");
+
+        //listas que guardan los field y labels
+        List<JTextField> listadoField = new ArrayList();
+        List<JLabel> listadoLabelUser = new ArrayList();
+
+        List<JLabel> listadoLabelTarjeta = new ArrayList();
+        List<JTextField> listadoFieldTarjeta = new ArrayList();
+
+
+        //guardar los elementos para su creacion
+        Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField);
+        Collections.addAll(listadoLabelUser, nombreLabel, apellidosLabel, telefonoLabel, correoLabel, direccionLabel, idLabel, pinLabel);
+
+
+
+        int y = 100; //para la separacion entre componentes Y
+        for (JTextField i : listadoField){
+
+            i.setText("");  // Sin texto inicial
+            i.setEditable(true);  // Para que sea editable o se pueda escribir
+            i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
+
+            i.setBounds(350, y, 200, 30); //(x,y,horizontal,vertical)
+            y += 50;
+            fondoPanel.add(i);
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JLabel i : listadoLabelUser){
+
+            i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+
+            i.setForeground(java.awt.Color.WHITE);  // Color
+
+            i.setBounds(200, y, 250, 30);  // (x,y,horizontal,vertical)
+
+
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JLabel i : listadoLabelTarjeta){
+            i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+
+            i.setForeground(java.awt.Color.WHITE);  // Color
+
+            i.setBounds(600, y, 200, 30);  // (x,y,horizontal,vertical)
+
+
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JTextField i : listadoFieldTarjeta){
+
+            i.setText("");  // Sin texto inicial
+            i.setEditable(true);  // Para que sea editable o se pueda escribir
+            i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
+
+            i.setBounds(800, y, 200, 30);  // (x,y,horizontal,vertical)
+
+
+            y += 50;
+
+            fondoPanel.add(i); //lo añade y recarga el panel
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+
+        javax.swing.JButton ingresarAdmin = new javax.swing.JButton(); //boton para ingresar datoss
+
+        ingresarAdmin.setText("Ingresar Admin"); 
+        ingresarAdmin.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
+
+        //indica si salio bien o mal el ingreso
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+
+
+        fondoPanel.add(ingresarAdmin); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+
+        ingresarAdmin.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    listadoField.clear(); //limpia la lista
+                    Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField); //la vuelve a ingresar para actualizar las lista
+                    ingresarAdminButtonActionPerformed(evt ,  listadoField, ingresarAdmin); //reciibe aparte del evento y la lista el label para indicar errores o si hay exito
+
+                    }
+                });
+
+
+    }
+    
+    private void ingresarAdminButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> listadoField, JButton ingresarAdmin){
+        //variables:
+        try {
+            String nombre = listadoField.get(0).getText();
+            String apellidos = listadoField.get(1).getText();
+            int telefono = Integer.parseInt(listadoField.get(2).getText());
+            String correo= listadoField.get(3).getText();
+            String direccionFisica = listadoField.get(4).getText();
+            String idUsuario = listadoField.get(5).getText();
+            String pin = listadoField.get(6).getText();
+            
+
+            Administrador nuevoAdmin = new Administrador(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin);
+            System.out.println(nuevoAdmin.toString());
+            System.out.println(nuevoAdmin.toStringUsuarios());
+
+            nuevoAdmin.enviarCorreoDatosAdmin(correo,nuevoAdmin.datosAdmin(nuevoAdmin));
+
+            Parqueo.guardarEnArchivo(Administrador.getListaAdmin(), "Administrador.txt");
+            Parqueo.guardarEnArchivo(Usuarios.getUsuarios(), "Usuarios.txt");
+
+            indicadorLabel.setText("Usuario ingresado con exito! Se envio un correo!");
+            indicadorLabel.setForeground(java.awt.Color.GREEN);
+
+        }
+        catch(NumberFormatException e){ //si el error es por el formato (telefono ya que solo recibe int)
+                indicadorLabel.setText("Campos vacios ''!");
+                indicadorLabel.setForeground(java.awt.Color.RED);
+                return;
+        }
+
+        catch(Exception e){ //cualquier otro error
+                indicadorLabel.setText(e.getMessage()); //solo el mensaje del error
+                indicadorLabel.setForeground(java.awt.Color.RED);
+
+                return;
+        }
+
+
+    for (JTextField i : listadoField ){ //vaciar todo
+        i.setText("");     
+    }
+
+
+}
+    
+    private void iniciarSesionAdminButtonActionPerformed(java.awt.event.ActionEvent evt){
+        System.out.println("Inicio sesion admin jeje");
+        
+        regresar(buscarBoton("Iniciar Sesion Admin"), evt);
+        //desaparecer botones
+        esconderBoton("Iniciar Sesion Admin");
+        esconderBoton("Crear Administrador");
+        
+        javax.swing.JTextField idField = new javax.swing.JTextField(); 
+        javax.swing.JTextField pinField = new javax.swing.JTextField(); 
+        
+        javax.swing.JLabel idLabel = new javax.swing.JLabel();
+        idLabel.setText("ID");
+        javax.swing.JLabel pinLabel = new javax.swing.JLabel(); 
+        pinLabel.setText("PIN");
+        
+        List<JTextField> listadoSesionF = new ArrayList();
+        List<JLabel> listadoSesionL = new ArrayList();
+        
+        Collections.addAll(listadoSesionF, idField, pinField);
+        Collections.addAll(listadoSesionL, idLabel, pinLabel);
+       
+        
+        int y = 100;
+        for (JTextField i : listadoSesionF){
+
+            i.setText("");  // Sin texto inicial
+            i.setEditable(true);  // Para que sea editable o se pueda escribir
+            i.setColumns(20);  // Ajustar el número de columnas (ancho del campo)
+            
+            i.setBounds(350, y, 200, 30); //(x,y,horizontal,vertical)
+            y += 50;
+            fondoPanel.add(i);
+            fondoPanel.revalidate();
+            fondoPanel.repaint();
+        }
+        y=100;
+        for (JLabel i : listadoSesionL){
+
+            i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+
+            i.setForeground(java.awt.Color.WHITE);  // Color
+
+            i.setBounds(200, y, 250, 30);  // (x,y,horizontal,vertical)
             
             
             y += 50;
@@ -530,96 +1125,439 @@ public class GUIProyecto1 extends javax.swing.JFrame {
             fondoPanel.revalidate();
             fondoPanel.repaint();
         }
-       
-    javax.swing.JButton ingresarUsuario = new javax.swing.JButton(); //boton para ingresar datoss
+        
+        //label para indicar errores o exito
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
+        
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+        
+        
+        javax.swing.JButton iniciarAdmin = new javax.swing.JButton(); //boton para ingresar datoss
     
-    ingresarUsuario.setText("Ingresar"); 
-    ingresarUsuario.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
-    
-    //indica si salio bien o mal el ingreso
-    javax.swing.JLabel indicadorLabel = new javax.swing.JLabel();
-    indicadorLabel.setText("");
-    indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
-    indicadorLabel.setForeground(java.awt.Color.WHITE); 
-    indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
-    
-    
-    fondoPanel.add(indicadorLabel); //lo añade y recarga el panel
-    fondoPanel.add(ingresarUsuario); //lo añade y recarga el panel
-    fondoPanel.revalidate();
-    fondoPanel.repaint();
+        iniciarAdmin.setText("Iniciar Admin"); 
+        iniciarAdmin.setBounds(350, 450, 200, 30); // (x,y,horizontal,vertical)
 
-    
-    ingresarUsuario.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
-       public void actionPerformed(java.awt.event.ActionEvent evt) {
-            listadoField.clear(); //limpia la lista
-            Collections.addAll(listadoField, nombreField, apellidosField, telefonoField, correoField, direccionField, idField, pinField); //la vuelve a ingresar para actualizar las lista
-            ingresarButtonActionPerformed(evt ,  listadoField,listadoFieldTarjeta, indicadorLabel); //reciibe aparte del evento y la lista el label para indicar errores o si hay exito
-            
+        fondoPanel.add(iniciarAdmin); //lo añade y recarga el panel
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+        
+        iniciarAdmin.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton de ingresarUsuario
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            listadoSesionF.clear(); //limpia la lista
+            Collections.addAll(listadoSesionF, idField, pinField); //la vuelve a ingresar para actualizar las lista
+            iniciarAdminButtonActionPerformed(evt,listadoSesionF, iniciarAdmin);
+            regresar(iniciarAdmin, evt);
             }
         });
-    
+        
+
 
     }
     
-    private void ingresarButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> pListadoField, List<JTextField> pListadoFieldTarjeta, JLabel pIndicadorLabel ) {                                           
-        //variables:
-            try {
-                String nombre = pListadoField.get(0).getText();
-                String apellidos = pListadoField.get(1).getText();
-                String correo= pListadoField.get(3).getText();
-                String direccionFisica = pListadoField.get(4).getText();
-                String idUsuario = pListadoField.get(5).getText();
-                String pin = pListadoField.get(6).getText();
-                String tarjetaVencimiento = pListadoFieldTarjeta.get(1).getText();
-                int telefono = Integer.parseInt(pListadoField.get(2).getText());
-                long tarjeta = Long.parseLong(pListadoFieldTarjeta.get(0).getText());
-                int codigoVal = Integer.parseInt(pListadoFieldTarjeta.get(2).getText());
-                
-                UsuariosParqueo nuevoUsuario = new UsuariosParqueo(nombre,apellidos,telefono,correo,direccionFisica,idUsuario,pin,tarjeta,tarjetaVencimiento,codigoVal);
-                System.out.println(nuevoUsuario.toString());
-                System.out.println(nuevoUsuario.toStringUsuarios());
-                
-                
-            }
-            catch(NumberFormatException e){ //si el error es por el formato (telefono ya que solo recibe int)
-                    pIndicadorLabel.setText("Campos vacios ''!");
-                    pIndicadorLabel.setForeground(java.awt.Color.RED);
-                    return;
-            }
-
-            catch(Exception e){ //cualquier otro error
-                    pIndicadorLabel.setText(e.getMessage()); //solo el mensaje del error
-                    pIndicadorLabel.setForeground(java.awt.Color.RED);
-
-                    return;
-            }
+    public void iniciarAdminButtonActionPerformed(java.awt.event.ActionEvent evt, List<JTextField> listadoSesionAdmin, JButton inciarAdmin){
+     //label para indicar errores o exito
+        indicadorLabel.setText("");
+        indicadorLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));  // fuente, tipo (osea cursiva, negrita etc), tamaño 
+        indicadorLabel.setForeground(java.awt.Color.WHITE); 
+        //indicadorLabel.setBounds(700, 300, 500, 150);  // (x,y,horizontal,vertical)
         
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
         
-        for (JTextField i : pListadoField ){ //vaciar todo
+        try{
+            String id = listadoSesionAdmin.get(0).getText();
+            String pin = listadoSesionAdmin.get(1).getText();
+            
+            Usuarios user;
+            user = Usuarios.existeUsuario(id, pin);
+            Administrador nuevoAdmin = null;
+            if (!(user instanceof Administrador) && user!=null){
+                throw new IllegalArgumentException("No es administrador del parqueo");
+            }
+            
+            if (user != null) {
+                
+                for (Administrador i : Administrador.getListaAdmin()){
+                    if (user.getIdUsuario().equals(i.getIdUsuario())&&user.getPin().equals(user.getPin())){
+                        nuevoAdmin = i;
+                    }
+                }
+                
+                System.out.println("Inicio sesion exitoso!");
+                deshabilitarComponentes();
+                regresar(inciarAdmin, evt);
+                indicadorLabel.setText("Inicio sesion exitoso!");
+                indicadorLabel.setForeground(java.awt.Color.GREEN);
+                inicioAdminButtonActionPerformed(evt, nuevoAdmin);
+                
+            } 
+            else {
+                throw new IllegalArgumentException("Usuario o PIN incorrectos.");
+            }
+           
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            indicadorLabel.setText(e.getMessage());
+            indicadorLabel.setForeground(java.awt.Color.RED);
+            return;
+        }
+        
+        for (JTextField i : listadoSesionAdmin ){ //vaciar todo
             i.setText("");     
         }
-        pIndicadorLabel.setText("Usuario ingresado con exito!");
-        pIndicadorLabel.setForeground(java.awt.Color.GREEN);
-                
-    }
-    
-    private void ingresarCarrosButtonActionPerformed(java.awt.event.ActionEvent evt){
-    
-    
-    }
-    
-    
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
 
-    private void adminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButtonActionPerformed
-        // TODO add your handling code here:
+    }
+    
+    public void inicioAdminButtonActionPerformed(java.awt.event.ActionEvent evt, Administrador admin){
+       indicadorLabel.setText("");
+        indicadorLabel.setForeground(java.awt.Color.WHITE);
         
-    }//GEN-LAST:event_adminButtonActionPerformed
+        indicadorLabel.setText("Administrador: "+ admin.getIdAdmin());
+        
+        javax.swing.JButton configuracionButton = new javax.swing.JButton(); //boton de crear usuario 
+        javax.swing.JButton repotesAdminButton = new javax.swing.JButton(); 
 
+        configuracionButton.setText("Configuracion Parqueo");
+        configuracionButton.setBounds(50, 100, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+        repotesAdminButton.setText("Reportes Admin");
+        repotesAdminButton.setBounds(50, 250, 200, 30); // Ajustar el número de columnas (x, y, horizontal y vertical)
+        
+        
+        
+        configuracionButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               
+                //Limpiar pantalla
+               System.out.println("Config Admin");
+               deshabilitarComponentes();
+               JButton reportes = buscarBoton("Reportes Admin");
+               JButton config = buscarBoton("Configuracion Parqueo");
+               regresar(buscarBoton("Iniciar Admin"),evt);
+               
+               reportes.setEnabled(true);
+               reportes.setVisible(true);
+               
+               config.setEnabled(true);
+               config.setVisible(true);
+               
+                //creacion de componentes
+               
+                javax.swing.JTextField horaInicioField = new javax.swing.JTextField();
+                javax.swing.JTextField horaFinalField = new javax.swing.JTextField();
+                javax.swing.JTextField precioHoraField = new javax.swing.JTextField();
+                javax.swing.JTextField tiempoMinimoField = new javax.swing.JTextField();
+                javax.swing.JTextField costoMultaField = new javax.swing.JTextField();
+
+                
+                javax.swing.JLabel horaInicioLabel = new javax.swing.JLabel();
+                horaInicioLabel.setText("Hora Inicio");
+                javax.swing.JLabel horaFinalLabel = new javax.swing.JLabel();
+                horaFinalLabel.setText("Hora Final");
+                javax.swing.JLabel precioHoraLabel = new javax.swing.JLabel();
+                precioHoraLabel.setText("Precio Hora");
+                javax.swing.JLabel tiempoMinimoLabel = new javax.swing.JLabel();
+                tiempoMinimoLabel.setText("Tiempo Minutos");
+                javax.swing.JLabel costoMultaLabel = new javax.swing.JLabel();
+                costoMultaLabel.setText("Costo multas");
+                
+
+                
+                List<JTextField> listadoConfiguracionField = new ArrayList();
+                List<JLabel> listadoConfiguracionLabel = new ArrayList();
+        
+                Collections.addAll(listadoConfiguracionField, horaInicioField,horaFinalField, precioHoraField, tiempoMinimoField, costoMultaField);
+                Collections.addAll(listadoConfiguracionLabel, horaInicioLabel,horaFinalLabel, precioHoraLabel, tiempoMinimoLabel, costoMultaLabel);
+                
+                int y = 100;
+                for (JTextField i : listadoConfiguracionField){
+                    i.setBounds(450, y+=50, 100, 30); 
+                    fondoPanel.add(i);
+                }
+                y = 100;
+                for (JLabel i : listadoConfiguracionLabel){
+                    i.setBounds(300, y+=50, 200, 30);
+                    i.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                    i.setForeground(Color.white);
+                    fondoPanel.add(i);
+                }
+                
+                //agregar espacio
+                javax.swing.JTextField agregarInicioField = new javax.swing.JTextField();
+                agregarInicioField.setBounds(800, 200, 100, 30);
+                
+                javax.swing.JLabel agregarInicioLabel = new javax.swing.JLabel();
+                agregarInicioLabel.setText("Agregar Espacio inicio");
+                agregarInicioLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                agregarInicioLabel.setForeground(Color.white);
+                agregarInicioLabel.setBounds(600, 200, 200, 30);
+                
+                javax.swing.JButton ingresarEspacios = new JButton();
+                ingresarEspacios.setBounds(950, 225, 80, 30);
+                ingresarEspacios.setText("Ingresar");
+                
+                javax.swing.JTextField agregarFinalField = new javax.swing.JTextField();
+                agregarFinalField.setBounds(800, 250, 100, 30);
+                javax.swing.JLabel agregarFinalLabel = new javax.swing.JLabel();
+                
+                agregarFinalLabel.setText("Agregar Espacio Fin");
+                agregarFinalLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                agregarFinalLabel.setForeground(Color.white);
+                agregarFinalLabel.setBounds(600, 250, 200, 30);
+                
+                
+                javax.swing.JTextField eliminarInicioField = new javax.swing.JTextField();
+                eliminarInicioField.setBounds(800, 300, 100, 30);
+                javax.swing.JTextField eliminarFinalField = new javax.swing.JTextField();
+                eliminarFinalField.setBounds(800, 350, 100, 30);
+
+                javax.swing.JLabel eliminarInicioLabel = new javax.swing.JLabel();
+                eliminarInicioLabel.setBounds(600, 300, 200, 30);
+                eliminarInicioLabel.setText("Eliminar espacio inicio");
+                eliminarInicioLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                eliminarInicioLabel.setForeground(Color.white);
+                
+                javax.swing.JLabel eliminarFinalLabel = new javax.swing.JLabel();
+                eliminarFinalLabel.setBounds(600, 350, 200, 30);
+                eliminarFinalLabel.setText("Eliminar espacio fin");
+                eliminarFinalLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                eliminarFinalLabel.setForeground(Color.white);
+                
+                javax.swing.JButton eliminarEspacios = new JButton();
+                eliminarEspacios.setBounds(950, 300, 80, 30);
+                eliminarEspacios.setText("Eliminar");
+                
+                javax.swing.JButton configurar = new JButton();
+                configurar.setBounds(400, 400, 100, 30);
+                configurar.setText("configurar");
+                
+                fondoPanel.add(agregarInicioField);
+                fondoPanel.add(agregarInicioLabel);
+                fondoPanel.add(agregarFinalField);
+                fondoPanel.add(agregarFinalLabel);
+                
+                fondoPanel.add(eliminarInicioField);
+                fondoPanel.add(eliminarFinalField);
+                fondoPanel.add(eliminarInicioLabel);
+                fondoPanel.add(eliminarFinalLabel);
+                
+                fondoPanel.add(ingresarEspacios);
+                fondoPanel.add(eliminarEspacios);
+                fondoPanel.add(configurar);
+                
+                fondoPanel.revalidate();
+                fondoPanel.repaint();
+                
+                
+                
+                ingresarEspacios.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               indicadorLabel.setForeground(Color.white);
+               String inicio = agregarInicioField.getText();
+               String fin = agregarFinalField.getText();
+               
+               try{
+                   int inicioInt = Integer.parseInt(inicio);
+                   int finInt = Integer.parseInt(fin);
+                   
+                   admin.agregarEspaciosParqueo(inicioInt, finInt);
+                   indicadorLabel.setText(Parqueo.toStringEspacios());
+                   agregarInicioField.setText("");
+                   agregarFinalField.setText("");
+                   
+                   Parqueo.guardarEnArchivo(Parqueo.getEspaciosParqueo(), "Espacios.txt");
+                   admin.enviarCorreoDatosAdmin(admin.getCorreo(), Parqueo.toStringEspacios() + "\n" + Parqueo.toStringListaParqueos());
+               }
+               catch(Exception e){
+                   indicadorLabel.setText(e.getMessage());
+                   indicadorLabel.setForeground(Color.red);
+               }
+               System.out.println(Parqueo.toStringEspacios());
+               
+           }});
+                
+                eliminarEspacios.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               indicadorLabel.setForeground(Color.white);
+               String inicio = eliminarInicioField.getText();
+               String fin = eliminarFinalField.getText();
+               
+               try{
+                   int inicioInt = Integer.parseInt(inicio);
+                   int finInt = Integer.parseInt(fin);
+                   admin.eliminarEspaciosParqueo(inicioInt, finInt);
+                   indicadorLabel.setText(Parqueo.toStringEspacios());
+                   eliminarInicioField.setText("");
+                   eliminarFinalField.setText("");
+                   
+                   Parqueo.guardarEnArchivo(Parqueo.getEspaciosParqueo(), "Espacios.txt");
+                   admin.enviarCorreoDatosAdmin(admin.getCorreo(), Parqueo.toStringEspacios() + "\n" + Parqueo.toStringListaParqueos());
+               }
+               catch(Exception e){
+                   indicadorLabel.setText(e.getMessage());
+                   indicadorLabel.setForeground(Color.red);
+               }
+               System.out.println(Parqueo.toStringEspacios());
+           }});
+                
+                configurar.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+               indicadorLabel.setForeground(Color.white);
+               try{
+                    String horaInicio = listadoConfiguracionField.get(0).getText();
+                    String horaFin = listadoConfiguracionField.get(1).getText();
+                    int precioHora = Integer.parseInt(listadoConfiguracionField.get(2).getText());
+                    int tiempoMin = Integer.parseInt(listadoConfiguracionField.get(3).getText());
+                    int costoMulta = Integer.parseInt(listadoConfiguracionField.get(4).getText());
+                    
+                    admin.configurarParqueo(precioHora, horaInicio, horaFin,tiempoMin,costoMulta);
+                    indicadorLabel.setText("Configuracion agregada con exito");
+                    indicadorLabel.setForeground(Color.green);
+                    System.out.println(Parqueo.toStringListaParqueos());
+                    horaInicioField.setText("");
+                    horaFinalField.setText("");
+                    precioHoraField.setText("");
+                    tiempoMinimoField.setText("");
+                    costoMultaField.setText("");
+                    
+                    Parqueo.guardarEnArchivo(Parqueo.getListaParqueos(), "Parqueo.txt");
+                    admin.enviarCorreoDatosAdmin(admin.getCorreo(), Parqueo.toStringEspacios() + "\n" + Parqueo.toStringListaParqueos());
+               }
+               catch(Exception e){
+                   indicadorLabel.setText(e.getMessage());
+                   indicadorLabel.setForeground(Color.red);
+               }
+              
+           }});
+                
+                
+                
+                
+           }
+        });
+        
+        repotesAdminButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+           public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //Limpiar pantalla
+               System.out.println("Reportes Admin");
+               deshabilitarComponentes();
+               JButton reportes = buscarBoton("Reportes Admin");
+               JButton config = buscarBoton("Configuracion Parqueo");
+               regresar(buscarBoton("Iniciar Admin"),evt);
+               
+               reportes.setEnabled(true);
+               reportes.setVisible(true);
+               
+               config.setEnabled(true);
+               config.setVisible(true);
+               
+               //Crear botones y labels
+               
+                javax.swing.JLabel parqueosLabel = new javax.swing.JLabel("Espacios del Parqueo");
+                parqueosLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                parqueosLabel.setForeground(Color.white);
+                
+                javax.swing.JLabel parqueosDisponiblesLabel = new javax.swing.JLabel("Espacios Disponibles");
+                parqueosDisponiblesLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                parqueosDisponiblesLabel.setForeground(Color.white);
+                
+                javax.swing.JLabel parqueosOcupadosLabel = new javax.swing.JLabel("Espacios Ocupados");
+                parqueosOcupadosLabel.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+                parqueosOcupadosLabel.setForeground(Color.white);
+                
+                javax.swing.JButton generarReporteEspaciosButton = new javax.swing.JButton("Generar Reporte General");
+                javax.swing.JButton generarReporteDisponiblesButton = new javax.swing.JButton("Generar Reporte Disponibles");
+                javax.swing.JButton generarReporteOcupadosButton = new javax.swing.JButton("Generar Reporte Ocupados");
+               
+                parqueosLabel.setBounds(300, 100, 250, 30);
+                parqueosDisponiblesLabel.setBounds(300, 150, 250, 30);
+                parqueosOcupadosLabel.setBounds(300, 200, 250, 30);
+                
+                generarReporteEspaciosButton.setBounds(550, 100, 250, 30);
+                generarReporteDisponiblesButton.setBounds(550, 150, 250, 30);
+                generarReporteOcupadosButton.setBounds(550, 200, 250, 30);
+                
+                
+                //Dar funcion al boton de reporte
+                
+                
+                generarReporteEspaciosButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+                   public void actionPerformed(java.awt.event.ActionEvent evt) {
+                       try{
+                            Usuarios.reportePDF("Cantidad de espacios: " + Parqueo.cantidadEspacios().get(0)  +"\nEspacios del parqueo:  \n" + Parqueo.toStringEspacios(), "ReporteAdmin_Espacios");
+                            indicadorLabel.setForeground(Color.green);
+                            indicadorLabel.setText("PDF Generado con exito!");
+                       }
+                       catch(Exception e){
+                           indicadorLabel.setText(e.getMessage());
+                           indicadorLabel.setForeground(Color.red);
+                       }
+                   }
+                });
+                
+                generarReporteDisponiblesButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+                   public void actionPerformed(java.awt.event.ActionEvent evt) {
+                       try{
+                            Usuarios.reportePDF("Cantidad de espacios: "+Parqueo.cantidadEspacios().get(1)+"\nEspacios Disponibles del parqueo:  \n" + Parqueo.toStringEspaciosDisponibles(), "ReporteAdmin_Espacios_Disponibles");
+                            indicadorLabel.setForeground(Color.green);
+                            indicadorLabel.setText("PDF Generado con exito!");
+                       }
+                       catch(Exception e){
+                           indicadorLabel.setText(e.getMessage());
+                           indicadorLabel.setForeground(Color.red);
+                       }
+                   }
+                });
+                                
+                generarReporteOcupadosButton.addActionListener(new java.awt.event.ActionListener(){ //creacion de boton 
+                   public void actionPerformed(java.awt.event.ActionEvent evt) {
+                       
+                       
+                       
+                       try{
+                            Usuarios.reportePDF("Cantidad de espacios: "+Parqueo.cantidadEspacios().get(2)+"\nEspacios Ocupados del parqueo:  \n" + Parqueo.toStringEspaciosOcupados(), "ReporteAdmin_Espacios_Ocupados");
+                            indicadorLabel.setForeground(Color.green);
+                            indicadorLabel.setText("PDF Generado con exito!");
+                       }
+                       catch(Exception e){
+                           indicadorLabel.setText(e.getMessage());
+                           indicadorLabel.setForeground(Color.red);
+                       }
+                   }
+                });
+                
+                
+                
+                
+                fondoPanel.add(parqueosLabel);
+                fondoPanel.add(parqueosDisponiblesLabel);
+                fondoPanel.add(parqueosOcupadosLabel);
+                
+                fondoPanel.add(generarReporteEspaciosButton);
+                fondoPanel.add(generarReporteDisponiblesButton);
+                fondoPanel.add(generarReporteOcupadosButton);
+                
+                fondoPanel.revalidate();
+                fondoPanel.repaint();
+               
+               
+           }
+        });
+
+
+        fondoPanel.add(configuracionButton); //los añade y recarga el panel
+        fondoPanel.add(repotesAdminButton); 
+        fondoPanel.revalidate();
+        fondoPanel.repaint();
+
+        tituloLabel.setText("Administrador");
+    }
+    
+    
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         // TODO add your handling code here:
         tituloLabel.setText("Sistema Parqueos Callejeros");
@@ -633,6 +1571,21 @@ public class GUIProyecto1 extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         
+        Parqueo.leerArchivo("Parqueo.txt");
+        Parqueo.leerArchivo("Espacios.txt");
+        Parqueo.leerArchivo("UsuariosParqueo.txt");
+        Parqueo.leerArchivo("Usuarios.txt");
+        Parqueo.leerArchivo("Administrador.txt");
+        
+        
+        System.out.println("Usuarios");
+        for (Usuarios i : Usuarios.getUsuarios()){
+            System.out.println(i.toString());
+        }
+        
+        System.out.println(Parqueo.toStringEspacios());
+        System.out.println(Parqueo.toStringListaParqueos());
+        //Parqueo.leerArchivo("Inspector");
         
         
         /* Set the Nimbus look and feel */
@@ -673,7 +1626,7 @@ public class GUIProyecto1 extends javax.swing.JFrame {
     private javax.swing.JButton adminButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JPanel fondoPanel;
-    private javax.swing.JButton inspectButton;
+    private javax.swing.JLabel indicadorLabel;
     private javax.swing.JLabel tituloLabel;
     private javax.swing.JButton usuarioButton;
     private javax.swing.JButton volverButton;

@@ -4,9 +4,17 @@ package parqueoscallejeros;
 //Import nuevos investigados para la verificacion de patrones en un string (utilizado para el correo ☺)
 import java.util.regex.Matcher; //operaciones de match (verificar si concuerdan) realizado en una secuencia que interpreta un patron
 import java.util.regex.Pattern; // una expresion regular compilada (para ser usada en matcher en este caso); 
-
 import java.util.ArrayList; //Listas
 import java.util.List;
+
+import com.itextpdf.text.Document; //Para la generacion de pdf
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileNotFoundException; //para el manejo de archivos
+import java.io.FileOutputStream;
+
 
 /**
  * @author Kendall Ariel Rojas Cartin
@@ -14,6 +22,8 @@ import java.util.List;
  **/
 
 public class Usuarios extends Parqueo{
+    private static final long serialVersionUID = 1L; //version de serializacion
+    
     //variables
     private String nombre; //de 2 a 20 caracteres
     private String apellidos; //de 1 a 40 caracteres
@@ -55,6 +65,28 @@ public class Usuarios extends Parqueo{
         setPin(pin);
         
         agregarUsuario(this);
+    }
+    
+    /**
+     * Genera un pdf con el nombre e informacion que se le pasen
+     * @param informacion La informacion del documentio
+     * @param nombre El nombre que tendra el PDF
+     **/
+    
+    public static void reportePDF(String informacion, String nombre){
+        Document document = new Document(); 
+        try {
+            //PdfWriter sirve para escribir en el archivo
+            PdfWriter.getInstance(document, new FileOutputStream(nombre + ".pdf")); //crea el archivo con el nombre FOS sirve para dirigir la informacion al archivo digamos
+
+            document.open();
+            document.add(new Paragraph(informacion));
+            document.close();
+
+            System.out.println("se creo el pdf!");
+        } catch (DocumentException | FileNotFoundException e) {
+            throw new IllegalArgumentException ("Problema al generar PDF");
+        }
     }
     
     /**
@@ -110,7 +142,7 @@ public class Usuarios extends Parqueo{
      **/
     
     public String toString(){
-        return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario() + " " + getPin();
+        return "Usuario: " + getNombre() + " "+ getApellidos() +" "+ getTelefono() + " " + getCorreo() +" "+ getDireccionFisica() +" "+ getIdUsuario();
     }
     
     /**
@@ -135,10 +167,10 @@ public class Usuarios extends Parqueo{
      * @throws IllegalArgumentException Si el nombre tiene una cantidad erronea de caracteres
      **/
     
-    public void setNombre(String pNombre){ 
+    private void setNombre(String pNombre){ 
         if (pNombre == null || pNombre.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("El nombre esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("El nombre esta vacio o es invalido");//manda una excepcion al sistema 
+        }                                                                          
         if (pNombre.length()<2 || pNombre.length()>20){
             throw new IllegalArgumentException("El nombre tiene una cantidad erronea de caracteres (20>nombre>2)");
         }
@@ -154,8 +186,8 @@ public class Usuarios extends Parqueo{
     
     public void setApellidos(String pApellidos){ 
         if (pApellidos == null || pApellidos.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("Los apellidos estan vacios o es invalido");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("Los apellidos estan vacios o es invalido");//mandar una excepcion
+        }                                                                          
         if (pApellidos.length()<1 || pApellidos.length()>40){
             throw new IllegalArgumentException("Los apellidos tienen una cantidad erronea de caracteres (40>apellidos>1)");
         }
@@ -170,10 +202,10 @@ public class Usuarios extends Parqueo{
      * @throws IllegalArgumentException Si el telefono no tiene 8 digitos
      **/
     
-    public void setTelefono(int pTelefono){                                                                           //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+    public void setTelefono(int pTelefono){  
          String cantidad = String.valueOf(pTelefono);
         if (cantidad == null || cantidad.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("Telefono vacio");//se utiliza para mandar una excepcion al sistema 
+            throw new IllegalArgumentException("Telefono vacio");//mandar una excepcion
         } 
         if (cantidad.length() != 8){
             throw new IllegalArgumentException("Telefono sin 8 digitos");
@@ -190,14 +222,14 @@ public class Usuarios extends Parqueo{
     
     public void setCorreo(String pCorreo){ 
         if (pCorreo == null || pCorreo.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("El correo esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
+            throw new IllegalArgumentException("El correo esta vacio o es invalido");// mandar una excepcion 
         }
         String formatoCorreo = "^.{3,}@.{3,}\\..{2,}$"; // ^ indica inicio de string, [...] caracteres permitidos \\ en regex el . se usa para indicar que cualquier caracter {...} caracteres $ final de cadena
         
         Pattern pattern = Pattern.compile(formatoCorreo); //lo compila
         Matcher matcher = pattern.matcher(pCorreo); // matcher con el correo
         if (matcher.matches() == false){
-            throw new IllegalArgumentException("El correo es invalido");//se utiliza para mandar una excepcion al sistema 
+            throw new IllegalArgumentException("El correo es invalido");//mandar una excepcion 
         }
         else{correo = pCorreo;}
         
@@ -212,8 +244,8 @@ public class Usuarios extends Parqueo{
     
     public void setDireccionFisica(String pDireccionFisica){ 
         if (pDireccionFisica == null || pDireccionFisica.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("Direccion vacia o invalida");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("Direccion vacia o invalida");//mandar una excepcion
+        }                                                                          
         if (pDireccionFisica.length()<5 || pDireccionFisica.length()>60){
             throw new IllegalArgumentException("Direccion con tamano invalido");
         }
@@ -230,8 +262,8 @@ public class Usuarios extends Parqueo{
     
     public void setIdUsuario(String pIdUsuario){
         if (pIdUsuario == null || pIdUsuario.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("El ID esta vacio o es invalido");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("El ID esta vacio o es invalido");//mandar una excepcion
+        }                                                                          
         if (pIdUsuario.length()<2 || pIdUsuario.length()>25){
             throw new IllegalArgumentException("El ID tiene una cantidad erronea de caracteres (20>nombre>2)");
         }
@@ -322,7 +354,7 @@ public class Usuarios extends Parqueo{
      * @return List Usuarios listaUsuarios
      **/
     
-    public List<Usuarios> getUsuarios(){
+    public static List<Usuarios> getUsuarios(){
         return listaUsuarios;
     }
 

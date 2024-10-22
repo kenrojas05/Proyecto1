@@ -17,6 +17,8 @@ import javax.mail.internet.*; // Importa las clases necesarias para MIME
 
 public class UsuariosParqueo extends Usuarios{
     
+    private static final long serialVersionUID = 1L; //version de serializacion
+    
     private long tarjeta; // Natural, 16 dígitos (tiene que ser única dentro de la aplicación)
     private String tarjetaVencimiento; // Mes y año, ej: 02/24 o 02/2024
     private int codigoVal; // Natural, 3 dígitos exactos
@@ -28,7 +30,10 @@ public class UsuariosParqueo extends Usuarios{
     private List<String> placaCarros = new ArrayList<>(); //1 a 6 caracteres
     
     private LocalDateTime fechaIngreso; //LocalDateTime.now();    
-    private LocalDateTime ingresoParqueo; 
+    private LocalDateTime ingresoParqueo;
+    
+    private int multa; //Sin implementar de momento
+    private List<Integer> multasUsuario = new ArrayList<>(); //Sin implementar de momento
     
     /**
      * Constructor de usuarios del Parqueo sin parametros
@@ -77,22 +82,31 @@ public class UsuariosParqueo extends Usuarios{
     public void Parquear(String placa, int espacioParqueo, int tiempoComprado){
         //Variables
         List<Integer> listaTiempo = new ArrayList<>();
-        Parqueo parqueo = new Parqueo();
         
-        List<Integer> listaEspacios = parqueo.getEspaciosParqueo(); //lista con todos los espacios que existen
-        List<Parqueo> listaParqueos = parqueo.getListaParqueos(); //Lista con parqueos realizados y configuracion
+        List<Integer> listaEspacios = Parqueo.getEspaciosParqueo(); //lista con todos los espacios que existen
+        List<Parqueo> listaParqueos = Parqueo.getListaParqueos(); //lista con parqueos realizados y configuracion
+        
+        if (!(getCarros().contains(placa))){
+            throw new IllegalArgumentException("No tienes esa placa en tu lista de carros");
+        }
         
         if (!listaEspacios.contains(espacioParqueo)){
             throw new IllegalArgumentException("El espacio buscado no existe!");
         }
         
         for (Parqueo i: listaParqueos){
-            if (i.getEspacio() == espacioParqueo){ //tener en cuenta desaparcar (En proceso...)
-                throw new IllegalArgumentException("El espacio: "+ espacioParqueo +" esta ocupado");
-            }
-
+                if (i.getEspacio() == espacioParqueo){ //tener en cuenta desaparcar (En proceso...)
+                    throw new IllegalArgumentException("El espacio: "+ espacioParqueo +" esta ocupado");
+                }
         }
-        //Tiempo de parqueo...
+        
+        for (Parqueo i: listaParqueos){
+            if (i.getPlaca().equals(placa)){
+                throw new IllegalArgumentException("Este vehiculo ya se encuentra parqueado: "+placa+" "+espacioParqueo);
+            }
+        }
+        
+        //Tiempo de parqueo
         try{
             listaTiempo = this.tiempoComprar(tiempoComprado);
         }
@@ -104,19 +118,23 @@ public class UsuariosParqueo extends Usuarios{
         
         //Parquear
         Parqueo parqueoUsuario = new Parqueo(placa, espacioParqueo);
-        setCarro(placa);
         parqueoUsuario.setParqueo(parqueoUsuario);
-        parqueoUsuario.establecerParqueos();
+        
+        
         this.setIngresoParqueo();
+        
+        
         parqueoUsuario.setHoraSalida(sacarTiempoRestante(placa));
+        
         System.out.println("Ingreso: "+this.getIngresoParqueo()+" Salida: "+parqueoUsuario.getHoraSalida());
 
-        System.out.println(sacarTiempoRestante(placa));
-        System.out.println(parqueoUsuario.toStringParqueo());
         
         System.out.println("Tiempo comprado: "+ getTiempoComprado());
         System.out.println("Tiempo guardado: "+ getTiempoGuardado());
-        
+        System.out.println(Parqueo.toStringListaParqueos());
+        parqueoUsuario.establecerParqueos();
+        System.out.println("Parqueo existoso!");
+        System.out.println(Parqueo.toStringListaParqueos());
     }
     
     /**
@@ -152,134 +170,16 @@ public class UsuariosParqueo extends Usuarios{
     }
     
     /**
-     * Saca el tiempo restante que le queda a un carro buscandolo a traves de su placa
+     * Saca el tiempo restante que le queda a un carro
      * @param placa String: la placa del vehiculo
      * @return Retorna un LocalDateTime si encuentra el vehiculo y logra sacar el tiempo restante si no retorna null
      * 
      **/
     
     public LocalDateTime sacarTiempoRestante(String placa){
-        Parqueo parqueo = new Parqueo();
-        List<Parqueo> listaParqueos = parqueo.getListaParqueos();
-        List<Integer> listaEspacios = parqueo.getEspaciosParqueo();
-        
-        // Verificar si ambas listas no son nulas
-        if (listaParqueos != null && listaEspacios != null) {
-            for (Parqueo i : listaParqueos){
-                for (String k : this.getCarros()){
-                    if (i.getPlaca().equals(k) && i.getPlaca().equals(placa)){
-                        return this.getIngresoParqueo().plusMinutes(this.getTiempoComprado()).minusMinutes(getTiempoGuardado());
-                    }
-                }
-
-            }
-            
-        }
-        return null;
+        return this.getIngresoParqueo().plusMinutes(this.getTiempoComprado()).minusMinutes(getTiempoGuardado());
     }
     
-    /**
-     * Revisa los carros parqueados (Ademas si un vehiculo ya esta fuera del limite lo desaparca)
-     * @return Retorna un string con la informacion de los carros en el parqueo
-     **/
-    
-    public String revisarCarros() {                   
-        Parqueo parqueo = new Parqueo();
-        UsuariosParqueo usuarioParqueo = new UsuariosParqueo();
-        LocalDateTime horaActual = LocalDateTime.now();
-        List<Parqueo> listaParqueos = parqueo.getListaParqueos();
-        List<Integer> listaEspacios = parqueo.getEspaciosParqueo();
-
-        String placa;
-        String revision = "";
-        
-
-        // Verificar si ambas listas no son nulas
-        if (listaParqueos != null && listaEspacios != null) {
-            for (Integer espacio : listaEspacios) { //Para cada espacio en la lista espacios
-
-                for (Parqueo parqueoObj : listaParqueos) { //para cada parqueo en la lista parqueos
-
-                    if (parqueoObj.getEspacio() == espacio) { //si el parqueo tiene asignado un espacio en lista espacios
-                        revision += "\nEl espacio "+ espacio+ " del parqueo corresponde con " + parqueoObj.getEspacio()+"\n";
-                        placa = parqueoObj.getPlaca(); //la placa del parqueo
-                        revision += "Espacio con placa:  "+ placa+"\n";
-                        for (UsuariosParqueo usuario : usuarioParqueo.getUsuariosParqueo()) { //Para cada usuario en los usuarios del parqueo
-
-                            for (String carro : usuario.getCarros()) {
-                                if (carro.equals(placa)) {
-                                    LocalDateTime ingreso = usuario.getIngresoParqueo();
-                                    if (parqueoObj.getHoraSalida() == null){
-                                        revision += "El tiempo del parqueo es null (Arreglar).\n";
-                                    }
-                                    else if (ingreso.isAfter(parqueoObj.getHoraSalida())) {
-                                        revision += "El tiempo de estacionamiento ya vencio!!.\n";
-                                        revision += horaActual+" "+parqueoObj.getHoraSalida()+"\n";
-                                        listaParqueos.remove(parqueoObj); //
-                                    } 
-                                    else if (ingreso.isBefore(parqueoObj.getHoraSalida())) {
-                                        revision += "Aun no ha vencido.\n";
-                                        revision += horaActual+" "+parqueoObj.getHoraSalida()+"\n";
-                                    } 
-                                    else {
-                                        revision += "El tiempo de estacionamiento coincide con la hora actual.\n";
-                                        revision += horaActual+" "+ingreso+"\n";
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return revision;
-    }
-    
-    /**
-     * Revisa los vehiculos aparcados y si uno se excede entonces desaparca el vehiculo
-     **/
-    
-    public void desaparcarAutomatico(){ //Realizar funcion de desaparcar automatico?
-        Parqueo parqueo = new Parqueo();
-        UsuariosParqueo usuarioParqueo = new UsuariosParqueo();
-        LocalDateTime horaActual = LocalDateTime.now();
-        List<Parqueo> listaParqueos = parqueo.getListaParqueos();
-        List<Integer> listaEspacios = parqueo.getEspaciosParqueo();
-
-        String placa;
-        
-        // Verificar si ambas listas no son nulas
-        if (listaParqueos != null && listaEspacios != null) {
-            for (Integer espacio : listaEspacios) { //Para cada espacio en la lista espacios
-
-                for (Parqueo parqueoObj : listaParqueos) { //para cada parqueo en la lista parqueos
-
-                    if (parqueoObj.getEspacio() == espacio) { //si el parqueo tiene asignado un espacio en lista espacios
-                        System.out.println("El espacio "+ espacio+ " del parqueo corresponde con " + parqueoObj.getEspacio()+"\n");
-                        placa = parqueoObj.getPlaca(); //la placa del parqueo
-                        System.out.println("Espacio con placa:  "+ placa+"\n");
-                        for (UsuariosParqueo usuario : usuarioParqueo.getUsuariosParqueo()) { //Para cada usuario en los usuarios del parqueo
-
-                            for (String carro : usuario.getCarros()) {
-                                if (carro.equals(placa)) {
-                                    LocalDateTime ingreso = usuario.getIngresoParqueo();
-                                    if (parqueoObj.getHoraSalida() != null){
-                                        if (ingreso.isAfter(parqueoObj.getHoraSalida())) {
-                                            System.out.println( "El tiempo de estacionamiento ya vencio Sera desaparcado!!.\n");
-                                            System.out.println( horaActual+" "+parqueoObj.getHoraSalida()+"\n");
-                                            listaParqueos.remove(parqueoObj); //
-                                        } 
-                                    }
-
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     /**
      * Agrega un usuariosParqueo a la lista de usuarios del parqueo 
@@ -299,6 +199,26 @@ public class UsuariosParqueo extends Usuarios{
     } 
     
     /**
+     * Actualiza el vehiculos
+     * @param userActualizado el usuario del parqueo al que se le van actualizar los vehiculos
+     **/
+    
+    public void actualizarVehiculos(UsuariosParqueo userActualizado) {
+        List<UsuariosParqueo> lista = UsuariosParqueo.getUsuariosParqueo();
+        for (int i = 0; i < lista.size(); i++) {
+            UsuariosParqueo user = lista.get(i);
+            //Comparar el usuario con el que se va a actualizar
+            if (user.getIdUsuario().equals(userActualizado.getIdUsuario())&&user.getPin().equals(userActualizado.getPin())) {
+                lista.set(i, userActualizado);
+                Usuarios.getUsuarios().set(i, userActualizado);
+                System.out.println(userActualizado.getCarros());
+                System.out.println("Usuario actualizado: " + userActualizado.getNombre());
+                break; //se actualizo por se sale
+            }
+        }
+    }
+    
+    /**
      * Convierte el usuario del parqueo en un string
      * @return String de los datos del usuario
      **/
@@ -310,7 +230,7 @@ public class UsuariosParqueo extends Usuarios{
                              + " " + getCorreo() 
                              +" "+   getDireccionFisica() 
                              +" "+   getIdUsuario() 
-                             + " " + getPin() 
+ 
                              + " " + getTarjeta() 
                              + " " + getTarjetaVencimiento() 
                              + " " + getCodigoVal() 
@@ -335,6 +255,25 @@ public class UsuariosParqueo extends Usuarios{
         return res;
     }
     
+    /**
+     * toString de los carros del usuario
+     * @return String de los carros del usuario
+     **/
+    
+    public String toStringCarros(){
+        if (placaCarros.isEmpty()) {
+            return "Carros Parqueados: 0"; 
+        }
+        int contador = 0;
+        String carros = "";
+        for (String i: placaCarros){
+            contador+=1;
+            carros += "Carro: "+contador+" Placa: "+i+"\n";
+            ;
+        }
+
+        return carros;
+    }
     
     /**
      * Funcion para enviar un correo con datos desde el correo del proyecto gmail hacia el correo que indiquen
@@ -363,22 +302,23 @@ public class UsuariosParqueo extends Usuarios{
                 Message mensaje = new MimeMessage(sesion); //iniciar mensaje con la sesion indicada
                 mensaje.setFrom(new InternetAddress("proyectokendall@gmail.com", "Parqueos Callejeros")); // desde quien se manda el correo
                 mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correo, this.getNombre())); // el destino del correo o destinatario InternetAdress(correo,persona)
-                mensaje.setSubject("Datos del usuario: " + this.getNombre()); // El asunto o titulo del correo
-                mensaje.setText(datosEnviar); // Todo el mensaje del correo
+                mensaje.setSubject("Datos del usuario: " + this.getNombre()); //titulo del correo
+                mensaje.setText(datosEnviar); // el mensaje del correo
 
                 // Enviar el mensaje
                 Transport.send(mensaje);
                 validacion = "Correo enviado exitosamente!";
+                System.out.println("Correo enviado exitosamente!");
                 return validacion;
 
             } catch (AddressException e) {
                 validacion = e.getMessage(); //error relacionado con la dirección del correo
                 return validacion;
             } catch (MessagingException e) {
-                validacion = e.getMessage(); // Manejo de errores relacionados con el envío de correo
+                validacion = e.getMessage(); // errores relacionados con el envío de correo
                 return validacion;
             } catch (UnsupportedEncodingException e) {
-                validacion = e.getMessage(); // Manejo de errores relacionados con la codificación del mensaje
+                validacion = e.getMessage(); //errores relacionados con la codificación del mensaje
                 return validacion;
             }
         }
@@ -392,7 +332,7 @@ public class UsuariosParqueo extends Usuarios{
     public String datosUsuario(UsuariosParqueo usuario){ //datos para cuando se actualiza el usuario
         String datos = "";
         for (Usuarios i : getUsuarios()){
-            if (i instanceof UsuariosParqueo || i.getPin() == this.getPin() || i.getIdUsuario() == this.getIdUsuario()){
+            if (i instanceof UsuariosParqueo || i.getPin().equals(this.getPin()) || i.getIdUsuario().equals(this.getIdUsuario())){
                 datos = "Nombre: " + usuario.getNombre() +"\n"
                        +"Apellidos: " +usuario.getApellidos()+ "\n"
                        +"Telefono:  "+usuario.getTelefono()+"\n"
@@ -408,7 +348,7 @@ public class UsuariosParqueo extends Usuarios{
             }
         }
         if (placaCarros.isEmpty()) {
-            return datos +"Carros: 0"+"\n"; //FALTA AGREGAR OTROS DATOS 
+            return datos +"Carros: 0"+"\n"; 
 
         }
         int contador = 0;
@@ -421,22 +361,6 @@ public class UsuariosParqueo extends Usuarios{
         return datos + carros;
     }
     
-     /**
-     * toString de los carros del usuario
-     * @return String de los carros del usuario
-     **/
-    
-    public String toStringCarros(){
-        int contador = 0;
-        String carros = "";
-        for (String i: placaCarros){
-            contador+=1;
-            carros += "Carro: "+contador+" Placa: "+i+"\n";
-            ;
-        }
-        return carros;
-    }
-
     //setters 
     
      /**
@@ -446,7 +370,6 @@ public class UsuariosParqueo extends Usuarios{
     public void setFechaIngreso() {
         LocalDateTime fechaActual = LocalDateTime.now(); // Obtiene la fecha y hora actual
         fechaIngreso = fechaActual; // Asigna la fecha de ingreso
-        System.out.println(fechaIngreso); // Imprime la fecha de ingreso
     }
     
      /**
@@ -456,7 +379,6 @@ public class UsuariosParqueo extends Usuarios{
     public void setIngresoParqueo() {
         LocalDateTime fechaActual = LocalDateTime.now(); // Obtiene la fecha y hora actual
         ingresoParqueo = fechaActual; // Asigna la fecha de ingreso
-        System.out.println(ingresoParqueo); // Imprime la fecha de ingreso
     }
     
     /**
@@ -490,8 +412,8 @@ public class UsuariosParqueo extends Usuarios{
     public void setTarjeta(long pTarjeta){ 
         String cantidad = String.valueOf(pTarjeta);
         if (cantidad == null || cantidad.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("tarjeta invalida!");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("tarjeta invalida!");//mandar una excepcion
+        }                                                                          
         if (cantidad.length()>16){
             throw new IllegalArgumentException("tarjeta con tamano invalido!");
         }
@@ -508,7 +430,7 @@ public class UsuariosParqueo extends Usuarios{
     public void setTarjetaVencimiento(String pTarjetaVencimiento){
          String regex = "(0?[1-9]|1[0-2])/(\\d{1,2})";//formato de tarjeta Ej: 02/24 0? significa que puede ir solo #[inicio-fin] rango de numeros que pueden ir a la par de #
 
-        if (!pTarjetaVencimiento.matches(regex)) {
+        if (!pTarjetaVencimiento.matches(regex)) { 
             throw new IllegalArgumentException("Tarjeta V Formato invalido. '0-12/0-...'");
         }
         else{tarjetaVencimiento = pTarjetaVencimiento;}
@@ -523,7 +445,7 @@ public class UsuariosParqueo extends Usuarios{
     
     public void setCodigoVal(int pCodigoVal){
         String cantidad = String.valueOf(pCodigoVal);
-        if (cantidad.length()!=3 || cantidad == null){
+        if (cantidad.length()!=3){ //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
             throw new IllegalArgumentException("El Codigo de validacion tiene una cantidad erronea de caracteres o es invalido");
         }
         else{codigoVal = pCodigoVal;}
@@ -538,12 +460,21 @@ public class UsuariosParqueo extends Usuarios{
     
     public void setCarro( String placa){ 
         if (placa == null || placa.isEmpty() ){  // || = or , .isEmpty() = true if length()=0
-            throw new IllegalArgumentException("placa invalida!");//se utiliza para mandar una excepcion al sistema 
-        }                                                                          //IllegalArgumentException es una clase que proviene de java.lang y sirve para indicar argumento ilegal
+            throw new IllegalArgumentException("placa invalida!");//mandar una excepcion
+        }                                                                          
         if (placa.length()>6 || placa.length()<1){
             throw new IllegalArgumentException("placa con tamano invalido!");
         }
         else{placaCarros.add(placa);}
+    }
+    
+    /**
+     * Set de la lista de carros
+     * @param listaCarros ListString con los carros 
+     **/
+    
+    public void setListaCarros(List<String> listaCarros){
+        placaCarros = listaCarros;
     }
     
     //getters
@@ -580,7 +511,7 @@ public class UsuariosParqueo extends Usuarios{
      * @return List UsuariosParqueo usuarios
      **/
     
-    public List<UsuariosParqueo> getUsuariosParqueo(){
+    public static List<UsuariosParqueo> getUsuariosParqueo(){
         return usuarios;
     }  
     
